@@ -6,7 +6,9 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.2.*"
+        "laravel/framework": "5.2.*",
+        "barryvdh/laravel-ide-helper": "^2.2",
+        "twbs/bootstrap": "^3.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -41,7 +43,11 @@
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta",
+            "php artisan optimize",
+            "mkdir -p public/bootstrap",
+            "cp -R vendor/twbs/bootstrap/dist/ public/bootstrap/"
         ]
     },
     "config": {
