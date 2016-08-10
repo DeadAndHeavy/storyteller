@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Core\Service\QuestService;
 use App\Http\Requests\QuestRequest;
+use Illuminate\Http\Request;
 
 class QuestController extends Controller
 {
@@ -28,6 +29,13 @@ class QuestController extends Controller
         $ownQuests = $this->questService->getOwn();
         return view('web/quest/ownQuests', [
             'quests' => $ownQuests
+        ]);
+    }
+
+    public function addEpisodeHtml(Request $request)
+    {
+        return view('web/quest/partial/add_episode', [
+            'episode_number' => $request->input('episode_number')
         ]);
     }
 
