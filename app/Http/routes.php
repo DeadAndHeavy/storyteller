@@ -8,6 +8,8 @@ Route::group(['prefix' => 'api/v1'], function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/quest/create', function() {
-    return view('quest/create');
-});
+
+Route::get('/quest', 'Web\QuestController@index');
+Route::get('/quest/own', 'Web\QuestController@ownQuests');
+Route::get('/quest/create', 'Web\QuestController@create');
+Route::post('/quest/store', 'Web\QuestController@store');

@@ -47,7 +47,8 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ url('/quest') }}">Public Quests</a></li>
+                    <li><a href="{{ url('/quest/own') }}">Your Quests</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

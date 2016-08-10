@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Create Quest</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/api/v1/quest') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/quest/store') }}">
                         {{ csrf_field() }}
 
                         <input id="user_id" type="hidden" name="user_id" value="{{ Auth::user()->id }}">
@@ -30,9 +30,7 @@
                             <label for="description" class="col-md-4 control-label">Quest description</label>
 
                             <div class="col-md-6">
-                                <textarea id="description" class="form-control" name="description">
-                                    {{ old('description') }}
-                                </textarea>
+                                <textarea id="description" class="form-control" name="description">{{ old('description') }}</textarea>
 
                                 @if ($errors->has('description'))
                                     <span class="help-block">
@@ -44,9 +42,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-quest"></i> Create
-                                </button>
+                                <button type="submit" class="btn btn-primary">Create</button>
                             </div>
                         </div>
                     </form>

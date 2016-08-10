@@ -14,7 +14,7 @@ class QuestController extends BaseApiController
 
     public function store()
     {
-        $quest = Quest::firstOrCreate($this->request->all());
+        Quest::firstOrCreate($this->request->input('quest'));
         var_dump($quest);die;
     }
 }
