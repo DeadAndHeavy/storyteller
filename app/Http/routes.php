@@ -17,5 +17,8 @@ Route::group(['namespace' => 'Web'], function() {
         Route::get('/quest/create', 'QuestController@create');
         Route::get('/quest/addEpisode', 'QuestController@addEpisode');
         Route::post('/quest/store', 'QuestController@store');
+        Route::get('/quest/{id}/edit', 'QuestController@edit')->name('edit_quest');
+        Route::patch('/quest/{id}', 'QuestController@update');
+        Route::delete('/quest/{id}', 'QuestController@destroy')->name('delete_quest');
     });
 });

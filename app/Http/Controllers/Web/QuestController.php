@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Core\Service\QuestService;
 use App\Http\Requests\EpisodeRequest;
 use App\Http\Requests\QuestRequest;
+use App\Quest;
 use Illuminate\Http\Request;
 
 class QuestController extends Controller
@@ -53,6 +54,26 @@ class QuestController extends Controller
     public function store(QuestRequest $request)
     {
         $this->questService->store($request->all());
+        return redirect('/quest/own');
+    }
+
+    public function edit($id)
+    {
+        return view('web/quest/edit', [
+            'quest' => Quest::find($id),
+            'genres' => $this->questService->getAllQuestGenres(),
+        ]);
+    }
+
+    public function update(QuestRequest $request)
+    {
+        $this->questService->update($request->id, $request->all());
+        return redirect('/quest/own');
+    }
+
+    public function destroy($id)
+    {
+        $this->questService->destroy($id);
         return redirect('/quest/own');
     }
 }

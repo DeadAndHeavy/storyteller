@@ -35,6 +35,16 @@ class QuestService
         Quest::create($questData);
     }
 
+    public function update($id, $questData)
+    {
+        Quest::find($id)->update($questData);
+    }
+
+    public function destroy($id)
+    {
+        Quest::find($id)->delete();
+    }
+
     public function addEpisode($episodeData)
     {
         Episode::create($episodeData);
