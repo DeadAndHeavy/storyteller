@@ -1,0 +1,28 @@
+textarea {
+    resize: none;
+}
+
+.vertical-align {
+    vertical-align: middle !important;
+}
+
+@media (min-width: 768px) {
+    .navbar > .container .navbar-brand {
+        margin-left: 0;
+        margin-right: 50px;
+    }
+}
+
+select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+
+.logo {
+    background: url('../img/st-logo.png') no-repeat center center;
+    display: inline-block;
+    float: left;
+    margin-left: 15px;
+    width: 210px;
+
+}

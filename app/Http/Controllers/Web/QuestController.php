@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Episode;
 use App\Http\Controllers\Controller;
 use App\Core\Service\QuestService;
+use App\Http\Requests\EpisodeRequest;
 use App\Http\Requests\QuestRequest;
 use Illuminate\Http\Request;
 
@@ -27,13 +29,15 @@ class QuestController extends Controller
     public function ownQuests()
     {
         $ownQuests = $this->questService->getOwn();
-        return view('web/quest/ownQuests', [
+        return view('web/quest/own_quests', [
             'quests' => $ownQuests
         ]);
     }
 
-    public function addEpisodeHtml(Request $request)
+    public function addEpisode(EpisodeRequest $request)
     {
+        $this->questService->addEpisode($request->all());
+
         return view('web/quest/partial/add_episode', [
             'episode_number' => $request->input('episode_number')
         ]);
@@ -41,7 +45,9 @@ class QuestController extends Controller
 
     public function create()
     {
-        return view('web/quest/create');
+        return view('web/quest/create', [
+            'genres' => $this->questService->getAllQuestGenres()
+        ]);
     }
 
     public function store(QuestRequest $request)

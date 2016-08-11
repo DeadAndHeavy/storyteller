@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Core\Service\QuestService;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
 class QuestServiceProvider extends ServiceProvider
@@ -14,7 +15,13 @@ class QuestServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Validator::extend('valid_genre',
+            function ($attribute, $value, $parameters)
+            {
+                return array_key_exists($value, QuestService::getAllQuestGenres());
+            },
+            'Bad genre'
+        );
     }
 
     /**

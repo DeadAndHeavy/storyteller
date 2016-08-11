@@ -14,7 +14,7 @@ class CreateEpisodesTable extends Migration
     {
         Schema::create('episodes', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('content');
+            $table->text('content')->default('');
             $table->integer('quest_id')->unsigned();
             $table->foreign('quest_id')->references('id')->on('quests');
             $table->integer('episode_number');

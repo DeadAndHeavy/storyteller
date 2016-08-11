@@ -14,14 +14,17 @@
                                 <td class="col-md-2 text-center vertical-align">Quest name</td>
                                 <td class="col-md-4 text-center vertical-align">Quest description</td>
                                 <td class="col-md-1 text-center vertical-align">Quest genre</td>
-                                <td class="col-md-2 text-center vertical-align">Author</td>
+                                <td class="col-md-2 text-center vertical-align">Actions</td>
                             </tr>
                             @foreach ($quests as $quest)
                                 <tr>
                                     <td class="text-center vertical-align">{{ $quest->name }}</td>
                                     <td class="vertical-align">{{ $quest->description }}</td>
                                     <td class="text-center vertical-align">@lang('quest.genre_' . $quest->genre)</td>
-                                    <td class="text-center vertical-align">{{ $quest->author->name }}</td>
+                                    <td class="text-center vertical-align">
+                                        <a href="{{ url('/quest/update') }}" class="btn btn-primary">Update</a>
+                                        <a href="{{ url('/quest/delete') }}" class="btn btn-danger">Delete</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </table>

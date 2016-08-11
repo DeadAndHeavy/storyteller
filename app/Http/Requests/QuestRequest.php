@@ -26,7 +26,8 @@ class QuestRequest extends Request
         return [
             'name' => 'required|unique:quests|min:2|max:50',
             'description' => 'required|max:255',
-            'user_id' => 'required|integer'
+            'genre' => 'required|valid_genre',
+            'user_id' => 'required|integer',
         ];
     }
 }
