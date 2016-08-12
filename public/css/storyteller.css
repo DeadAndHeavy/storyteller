@@ -24,5 +24,8 @@ select:-moz-focusring {
     float: left;
     margin-left: 15px;
     width: 210px;
+}
 
+body {
+    background: url('../img/paper-back.png');
 }

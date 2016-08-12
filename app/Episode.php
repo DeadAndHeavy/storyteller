@@ -12,4 +12,9 @@ class Episode extends Model
     {
         return $this->belongsTo('App\Quest', 'quest_id');
     }
+
+    public function episodeActions()
+    {
+        return $this->hasMany('App\EpisodeAction');
+    }
 }

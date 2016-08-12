@@ -35,15 +35,6 @@ class QuestController extends Controller
         ]);
     }
 
-    public function addEpisode(EpisodeRequest $request)
-    {
-        $this->questService->addEpisode($request->all());
-
-        return view('web/quest/partial/add_episode', [
-            'episode_number' => $request->input('episode_number')
-        ]);
-    }
-
     public function create()
     {
         return view('web/quest/create', [

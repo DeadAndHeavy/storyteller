@@ -25,7 +25,7 @@ class QuestRequest extends Request
     {
         return [
             'name' => 'required|min:2|max:50|unique:quests,name,' . $this->id,
-            'description' => 'required|max:255',
+            'description' => 'required|max:1000',
             'genre' => 'required|valid_genre',
             'user_id' => 'required|integer',
         ];

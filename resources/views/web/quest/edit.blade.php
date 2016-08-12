@@ -54,7 +54,7 @@
                             <label for="description" class="col-md-4 control-label">Quest description</label>
 
                             <div class="col-md-6">
-                                <textarea id="description" class="form-control" noresize maxlength="255" spellcheck="false" name="description">{{ $quest->description }}</textarea>
+                                <textarea id="description" class="form-control" noresize maxlength="1000" rows="14" spellcheck="false" name="description">{{ $quest->description }}</textarea>
 
                                 @if ($errors->has('description'))
                                     <span class="help-block">
@@ -67,6 +67,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">Update</button>
+                                <a class="btn btn-success" href="{{ route('all_episodes', ['id' => $quest->id]) }}">Episodes</a>
                             </div>
                         </div>
                     </form>
