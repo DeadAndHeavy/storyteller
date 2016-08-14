@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Episode extends Model
 {
-    protected $fillable = ['content', 'quest_id', 'episode_number'];
+    protected $fillable = ['title', 'content', 'quest_id'];
 
     public function quest()
     {

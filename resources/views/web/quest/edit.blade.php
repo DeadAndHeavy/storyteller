@@ -67,7 +67,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">Update</button>
-                                <a class="btn btn-success" href="{{ route('all_episodes', ['id' => $quest->id]) }}">Episodes</a>
+                                <a href="{{ url('/quest/own') }}" class="btn btn-info">Back to own quests</a>
                             </div>
                         </div>
                     </form>

@@ -29,3 +29,5 @@ select:-moz-focusring {
 body {
     background: url('../img/paper-back.png');
 }
+
+.top-buffer { margin-top:20px; }

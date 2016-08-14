@@ -14,11 +14,10 @@ class CreateEpisodesTable extends Migration
     {
         Schema::create('episodes', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('content')->default('');
+            $table->string('title');
+            $table->text('content');
             $table->integer('quest_id')->unsigned();
-            $table->foreign('quest_id')->references('id')->on('quests');
-            $table->integer('episode_number');
-            $table->unique(['quest_id', 'episode_number']);
+            $table->foreign('quest_id')->references('id')->on('quests')->onDelete('cascade');
             $table->index('quest_id');
             $table->timestamps();
         });

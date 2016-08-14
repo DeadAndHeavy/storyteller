@@ -16,21 +16,7 @@
                                 <td class="col-md-1 text-center vertical-align">Quest genre</td>
                                 <td class="col-md-2 text-center vertical-align">Actions</td>
                             </tr>
-                            @foreach ($quests as $quest)
-                                <tr>
-                                    <td class="text-center vertical-align">{{ $quest->name }}</td>
-                                    <td class="vertical-align">{{ $quest->description }}</td>
-                                    <td class="text-center vertical-align">@lang('quest.genre_' . $quest->genre)</td>
-                                    <td class="text-center vertical-align">
-                                        <a href="{{ route('edit_quest', ['id' => $quest->id]) }}" class="btn btn-primary">Update</a>
-                                        <form class="visible-lg-inline-block delete_quest" role="form" action="{{ route('delete_quest', ['id' => $quest->id]) }}" method="POST">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            {{ csrf_field() }}
-                                            <button onclick="return confirm('Are you sure you want to delete this quest?');" type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            @each('web/quest/partial/quest', $quests, 'quest')
                         </table>
                     @else
                         No quests

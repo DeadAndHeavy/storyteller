@@ -17,7 +17,7 @@ class CreateEpisodeActionsTable extends Migration
             $table->text('content');
             $table->integer('target_episode_id');
             $table->integer('episode_id')->unsigned();
-            $table->foreign('episode_id')->references('id')->on('episodes');
+            $table->foreign('episode_id')->references('id')->on('episodes')->onDelete('cascade');
             $table->index('episode_id');
             $table->timestamps();
         });

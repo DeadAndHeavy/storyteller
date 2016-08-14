@@ -160,7 +160,8 @@ return [
          * Custom Providers
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        App\Providers\QuestServiceProvider::class
+        App\Providers\QuestServiceProvider::class,
+        App\Providers\EpisodeServiceProvider::class
 
     ],
 

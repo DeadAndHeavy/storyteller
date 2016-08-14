@@ -1,19 +1,9 @@
-<div class="episode col-md-12" data-episode_number="{{ $episode->episode_number }}">
-    <div class="panel panel-success">
-        <div class="panel-heading">Episode {{ $episode->episode_number }}</div>
+<div class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ $episode->title }}</div>
         <div class="panel-body">
-            <div class="form-group">
-                <label for="episode_{{ $episode->episode_number }}_content" class="col-md-2 control-label">Episode text</label>
-                <div class="col-md-10">
-                    <textarea id="episode_{{ $episode->episode_number }}_content" class="form-control" rows="10" spellcheck="false" name="episodes[{{ $episode->episode_number }}][content]"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="episode_{{ $episode->episode_number }}_actions" class="col-md-2 control-label">Episode actions</label>
-                <div id="episode_{{ $episode->episode_number }}_actions" class="col-md-10">
-
-                </div>
-            </div>
+            <span>Actions: {{ count($episode->episodeActions) }}</span>
         </div>
     </div>
 </div>
+
