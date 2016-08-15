@@ -1,24 +1,18 @@
-<div class="episode_action episode_action_{{ $action_index }} form-group{{ $errors->has('action_content_list.' . $action_index) ? ' has-error' : '' }}">
-    <label for="action_content_list[{{ $action_index }}]" class="col-md-2 control-label">Episode action {{ $action_index }}</label>
+<div class="episode_action form-group{{ $errors->has('actions_list.' . $action_index . '.content') ? ' has-error' : '' }}" data-episode_action_index="{{ $action_index }}">
+    <label for="actions_list[{{ $action_index }}][content]" class="col-md-2 control-label">Episode action</label>
 
-    <div class="col-md-10">
-        <input id="action_content_{{ $action_index }}" name="action_content_list[{{ $action_index }}]" type="text" class="form-control" value="{{ $action_content }}">
-        @if ($errors->has('action_content_list.' . $action_index))
+    <div class="col-md-9">
+        <input name="actions_list[{{ $action_index }}][content]" type="text" class="form-control" value="{{ $action_content }}">
+        <input name="actions_list[{{ $action_index }}][action_id]" type="hidden" value="{{ isset($action_id) ? $action_id : null }}">
+        @if ($errors->has('actions_list.' . $action_index  . '.content'))
             <span class="help-block">
-                <strong>{{ $errors->first('action_content_list.' . $action_index) }}</strong>
+                <strong>{{ $errors->first('actions_list.' . $action_index  . '.content') }}</strong>
             </span>
         @endif
     </div>
-    <!--<div class="col-md-2">
-        <select id="target_{{ $action_index }}" name="target[{{ $action_index }}]" class="form-control">
-            <option disabled selected>@lang('episode.choose_target')</option>
-            @foreach ($episodes as $episode)
-                @if (old("target[{{ $action_index }}]") == $episode->id)
-                    <option selected value="{{ $episode->id }}">{{ $episode->id }}</option>
-                @else
-                    <option value="{{ $episode->id }}">{{ $episode->id }}</option>
-                @endif
-            @endforeach
-        </select>
-    </div>-->
+    <div class="col-md-1">
+        <button data-quest_id="{{ $quest_id }}" class="btn btn-danger delete_episode_action" type="button">
+            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+        </button>
+    </div>
 </div>

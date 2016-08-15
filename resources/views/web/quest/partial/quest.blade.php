@@ -9,6 +9,9 @@
         <a href="{{ route('all_episodes', ['id' => $quest->id]) }}" class="btn btn-success" title="Manage quest episodes">
             <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
         </a>
+        <a href="{{ route('all_episodes', ['id' => $quest->id]) }}" class="btn btn-epic" title="Quest scenario">
+            <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+        </a>
         <form class="delete_quest" style="display:inline" role="form" action="{{ route('delete_quest', ['id' => $quest->id]) }}" method="POST">
             <input type="hidden" name="_method" value="DELETE">
             {{ csrf_field() }}

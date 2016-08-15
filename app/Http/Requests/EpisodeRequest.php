@@ -24,7 +24,7 @@ class EpisodeRequest extends Request
     public function messages()
     {
         return [
-            'action_content_list.*.required' => 'Episode action content required',
+            'actions_list.*.content.required' => 'Episode action content required',
         ];
     }
 
@@ -39,7 +39,7 @@ class EpisodeRequest extends Request
             'title' => 'required',
             'quest_id' => 'required|integer',
             'content' => 'required|max:4000',
-            'action_content_list.*' => 'required'
+            'actions_list.*.content' => 'required'
         ];
     }
 }

@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Create Quest</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/quest/store') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/quest') }}">
                         {{ csrf_field() }}
 
                         <input id="user_id" type="hidden" name="user_id" value="{{ Auth::user()->id }}">

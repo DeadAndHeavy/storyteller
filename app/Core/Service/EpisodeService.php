@@ -18,26 +18,42 @@ class EpisodeService
         /** @var Episode $episodeModel */
         $episodeModel = Episode::create($questData);
         
-        foreach ($questData['action_content_list'] as $action_content) {
+        foreach ($questData['actions_list'] as $actionData) {
             $data = [
                 'episode_id' => $episodeModel->id,
-                'content' => $action_content
+                'content' => $actionData['content']
             ];
             EpisodeAction::create($data);
         }
     }
 
-    /*public function update($id, $questData)
+    public function update($episodeId, $questData)
     {
-        Quest::find($id)->update($questData);
+        Episode::find($episodeId)->update($questData);
+
+        $currentEpisodeActionIds = [];
+        $oldEpisodeActionIds = Episode::find($episodeId)->episodeActions->pluck('id')->toArray();
+
+        foreach ($questData['actions_list'] as $episodeActionData) {
+            if ($episodeActionData['action_id']) {
+                EpisodeAction::find($episodeActionData['action_id'])->update(['content' => $episodeActionData['content']]);
+                $currentEpisodeActionIds[] = $episodeActionData['action_id'];
+            } else {
+                EpisodeAction::create([
+                    'content' => $episodeActionData['content'],
+                    'episode_id' => $episodeId
+                ]);
+            }
+        }
+        EpisodeAction::destroy(array_diff($oldEpisodeActionIds, $currentEpisodeActionIds));
     }
 
     public function destroy($id)
     {
-        Quest::find($id)->delete();
+        Episode::destroy($id);
     }
 
-    public function addEpisode($episodeData)
+    /*public function addEpisode($episodeData)
     {
         Episode::create($episodeData);
     }*/

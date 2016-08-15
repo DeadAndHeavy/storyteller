@@ -16,14 +16,7 @@
                                 <td class="col-md-1 text-center vertical-align">Quest genre</td>
                                 <td class="col-md-2 text-center vertical-align">Author</td>
                             </tr>
-                            @foreach ($quests as $quest)
-                                <tr>
-                                    <td class="text-center vertical-align">{{ $quest->name }}</td>
-                                    <td class="vertical-align">{{ $quest->description }}</td>
-                                    <td class="text-center vertical-align">@lang('quest.genre_' . $quest->genre)</td>
-                                    <td class="text-center vertical-align">{{ $quest->author->name }}</td>
-                                </tr>
-                            @endforeach
+                            @each('web/quest/partial/quest_without_actions', $quests, 'quest')
                         </table>
                     @else
                         No quests

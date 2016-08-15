@@ -42,7 +42,7 @@ class QuestService
 
     public function destroy($id)
     {
-        Quest::find($id)->delete();
+        Quest::destroy($id);
     }
 
     public function addEpisode($episodeData)
