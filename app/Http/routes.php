@@ -27,5 +27,9 @@ Route::group(['namespace' => 'Web'], function() {
         Route::get('/quest/{questId}/episode/{episodeId}/edit', 'EpisodeController@edit')->name('edit_episode');
         Route::patch('/quest/{questId}/episode/{episodeId}', 'EpisodeController@update')->name('update_episode');
         Route::delete('/quest/{id}/episode/{episodeId}', 'EpisodeController@destroy')->name('delete_episode');
+
+        Route::get('/quest/{questId}/scenario', 'ScenarioController@index')->name('scenario');
+        Route::post('/quest/{questId}/scenario/save', 'ScenarioController@save')->name('save_scenario');
+        Route::get('/scenario/renderNewStep', 'ScenarioController@renderNewStep');
     });
 });

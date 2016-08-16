@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateScenarioStepsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('scenario_steps', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('quest_id')->unsigned();
+            $table->foreign('quest_id')->references('id')->on('quests')->onDelete('cascade');
+            $table->integer('episode_id')->unsigned();
+            $table->foreign('episode_id')->references('id')->on('episodes')->onDelete('cascade');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('scenario_steps');
+    }
+}

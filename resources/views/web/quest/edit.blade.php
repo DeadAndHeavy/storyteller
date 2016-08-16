@@ -66,8 +66,12 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ url('/quest/own') }}" class="btn btn-info">Back to own quests</a>
+                                <button type="submit" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Update
+                                </button>
+                                <a href="{{ url('/quest/own') }}" class="btn btn-info">
+                                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to own quests
+                                </a>
                             </div>
                         </div>
                     </form>

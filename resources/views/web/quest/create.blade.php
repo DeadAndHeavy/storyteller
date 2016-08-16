@@ -26,6 +26,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+                            <label for="description" class="col-md-4 control-label">Quest description</label>
+
+                            <div class="col-md-6">
+                                <textarea id="description" class="form-control" noresize maxlength="255" spellcheck="false" name="description">{{ old('description') }}</textarea>
+
+                                @if ($errors->has('description'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('description') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('genre') ? ' has-error' : '' }}">
                             <label for="genre" class="col-md-4 control-label">Quest genre</label>
 
@@ -49,23 +63,14 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-                            <label for="description" class="col-md-4 control-label">Quest description</label>
-
-                            <div class="col-md-6">
-                                <textarea id="description" class="form-control" noresize maxlength="255" spellcheck="false" name="description">{{ old('description') }}</textarea>
-
-                                @if ($errors->has('description'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('description') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">Create</button>
+                                <button type="submit" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Create
+                                </button>
+                                <a href="{{ url('/quest/own') }}" class="btn btn-info">
+                                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to own quests
+                                </a>
                             </div>
                         </div>
                     </form>

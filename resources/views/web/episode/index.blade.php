@@ -8,7 +8,12 @@
                 <div class="panel-heading">Episodes</div>
                 <div class="panel-body">
                     <div class="control-buttons">
-                        <a href="{{ route('create_episode', ['id' => $questId]) }}" class="btn btn-success">Add new episode</a>
+                        <a href="{{ route('create_episode', ['id' => $questId]) }}" class="btn btn-success">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add new episode
+                        </a>
+                        <a href="{{ url('/quest/own') }}" class="btn btn-info">
+                            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to own quests
+                        </a>
                     </div>
                     <div class="top-buffer" id="episodes">
                         @if (count($episodes))

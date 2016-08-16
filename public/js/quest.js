@@ -36,4 +36,19 @@ $(document).on('click', '.delete_episode_action', function ()
     $("#add_episode_action").prop('disabled', false);
 });
 
+$(document).on('click', '#add_scenario_step', function ()
+{
+    $.get("/scenario/renderNewStep", {questId: $(this).data('quest_id')}, function (data)
+    {
+        $("#scenario_steps").append(data);
+    });
+});
 
+$(document).on('change', '.scenario-episode-selector', function ()
+{
+    $.get("/scenario/renderNewStep", {questId: $(this).data('quest_id'), currentEpisodeId: this.value}, function (data)
+    {
+        $("#scenario_steps").append(data);
+    });
+    $(this).parents('.scenario_step').remove();
+});
