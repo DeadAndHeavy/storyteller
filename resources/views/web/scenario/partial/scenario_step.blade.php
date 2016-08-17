@@ -1,32 +1,66 @@
-<div class="scenario_step  panel panel-default col-md-12 col-md-offset-1 top-buffer alert-info">
-    <div class="panel-body">
-        <div class="form-group col-md-6">
-            <select data-quest_id="{{ $questId }}" class="form-control scenario-episode-selector">
-                <option disabled selected>@lang('scenario.choose_episode')</option>
-                @foreach ($episodes as $episode)
-                    <option value="{{ $episode->id }}">{{ $episode->title }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group col-md-12">
-            <div class="panel panel-default episode-content">
-                <div class="panel-body">
-                    @if ($currentEpisode)
-                        {{ $currentEpisode->content }}
-                    @else
-                        Select the episode and its contents will appear here
-                    @endif
+<div class="top-buffer scenario_step">
+    <hr/>
+    <div class="">
+        <h3>Episode section</h3>
+    </div>
+    <div class="panel panel-default alert-info">
+        <div class="panel-body">
+            <div class="col-md-12 form-group">
+                <label for="name" class="col-md-1 control-label">Episode</label>
+                <div class="col-md-4">
+                    <select data-quest_id="{{ $questId }}" class="form-control scenario-episode-selector">
+                        <option disabled selected>@lang('scenario.choose_episode')</option>
+                        @foreach ($episodes as $episode)
+                            @if ($currentEpisode && $episode->id == $currentEpisode->id)
+                                <option selected value="{{ $episode->id }}">{{ $episode->title }}</option>
+                            @else
+                                <option value="{{ $episode->id }}">{{ $episode->title }}</option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
             </div>
             @if ($currentEpisode)
-                @foreach ($currentEpisode->episodeActions as $currentEpisodeAction)
-                <div class="panel panel-info episode-actions">
-                    <div class="panel-body">
-                        {{ $currentEpisodeAction->content }}
+                <div class="col-md-12 form-group">
+                    <label class="col-md-1 control-label">Content</label>
+                    <div class="col-md-11">
+                        <div class="panel episode-content ">
+                            <div class="panel-body">
+                                {{ $currentEpisode->content }}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                @endforeach
+                <div class="col-md-12 form-group">
+                    <label class="col-md-1 control-label">Actions</label>
+                    <div class="col-md-11">
+                        @foreach ($currentEpisode->episodeActions as $currentEpisodeAction)
+                            <div class="col-md-8">
+                                <div class="episode_action_content">
+                                    <div class="panel episode-content ">
+                                        <div class="panel-body">
+                                            <span class="text-success">{{ $currentEpisodeAction->content }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <select name="scenario_episode_action_target_id[{{ $currentEpisodeAction->id }}]" class="form-control">
+                                    <option disabled selected>@lang('scenario.choose_target')</option>
+                                    @foreach ($episodes as $episode)
+                                        @if ($episode->id == $currentEpisodeAction->target_episode_id)
+                                            <option selected value="{{ $episode->id }}">{{ $episode->title }}</option>
+                                        @else
+                                            <option value="{{ $episode->id }}">{{ $episode->title }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             @endif
         </div>
     </div>
+
 </div>

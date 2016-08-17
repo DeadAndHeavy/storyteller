@@ -20,7 +20,7 @@
                                 </button>
                             </div>
                             {{ csrf_field() }}
-                            <div id="scenario_steps" class="col-md-10">
+                            <div id="scenario_steps" class="">
 
                             </div>
                         </form>

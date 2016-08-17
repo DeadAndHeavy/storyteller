@@ -46,9 +46,11 @@ $(document).on('click', '#add_scenario_step', function ()
 
 $(document).on('change', '.scenario-episode-selector', function ()
 {
+    var scenario_step = $(this).parents('.scenario_step');
     $.get("/scenario/renderNewStep", {questId: $(this).data('quest_id'), currentEpisodeId: this.value}, function (data)
     {
-        $("#scenario_steps").append(data);
+        $(scenario_step).replaceWith(data);
+        //$("#scenario_steps").append(data);
     });
-    $(this).parents('.scenario_step').remove();
+    //$(this).parents('.scenario_step').remove();
 });

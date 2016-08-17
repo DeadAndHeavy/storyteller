@@ -13,8 +13,8 @@
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                             <label for="title" class="col-md-2 control-label">Episode short title</label>
 
-                            <div class="col-md-10">
-                                <input type="text" id="title" class="form-control" spellcheck="false" name="title" value="{{ old('title') }}">
+                            <div class="col-md-8">
+                                <input type="text" id="title" class="form-control" maxlength="100" spellcheck="false" name="title" value="{{ old('title') }}">
                                 @if ($errors->has('title'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('title') }}</strong>

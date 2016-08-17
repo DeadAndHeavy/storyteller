@@ -17,6 +17,7 @@ class CreateQuestsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('genre');
+            $table->integer('init_episode_id');
             $table->boolean('approved')->default(false);
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
