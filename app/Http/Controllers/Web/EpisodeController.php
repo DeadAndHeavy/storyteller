@@ -36,7 +36,8 @@ class EpisodeController extends Controller
         $episodes = Episode::where('quest_id', $questId)->get();
         return view('web/episode/create', [
             'quest' => $quest,
-            'episodes' => $episodes
+            'episodes' => $episodes,
+            'types' => $this->episodeService->getAllEpisodeTypes(),
         ]);
     }
 
@@ -63,6 +64,7 @@ class EpisodeController extends Controller
         return view('web/episode/edit', [
             'questId' => $questId,
             'episode' => Episode::find($episodeId),
+            'types' => $this->episodeService->getAllEpisodeTypes(),
         ]);
     }
 

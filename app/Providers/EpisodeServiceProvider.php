@@ -15,12 +15,12 @@ class EpisodeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Validator::extend('valid_episode_actions_count',
+        Validator::extend('valid_episode_type',
             function ($attribute, $value, $parameters)
             {
-                return count($value) > 1;
+                return array_key_exists($value, EpisodeService::getAllEpisodeTypes());
             },
-            'you need to add at least one action'
+            'Bad episode type'
         );
     }
 

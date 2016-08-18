@@ -1,6 +1,6 @@
 <tr>
-    <td class="text-center vertical-align">{{ $episode->id }}</td>
     <td class="vertical-align">{{ $episode->title }}</td>
+    <td class="text-center vertical-align">{{ $episode->type }}</td>
     <td class="text-center vertical-align">{{ count($episode->episodeActions) }}</td>
     <td class="text-center vertical-align">
         <a href="{{ route('edit_episode', ['questId' => $episode->quest->id, 'episodeId' => $episode->id]) }}" class="btn btn-primary" title="Update episode">

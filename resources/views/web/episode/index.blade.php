@@ -19,8 +19,8 @@
                         @if (count($episodes))
                             <table class="table table-bordered">
                                 <tr class="active">
-                                    <td class="col-md-1 text-center vertical-align">Episode id</td>
-                                    <td class="col-md-4 text-center vertical-align">Episode title</td>
+                                    <td class="col-md-3 text-center vertical-align">Episode title</td>
+                                    <td class="col-md-1 text-center vertical-align">Episode type</td>
                                     <td class="col-md-1 text-center vertical-align">Actions count</td>
                                     <td class="col-md-2 text-center vertical-align">Actions</td>
                                 </tr>

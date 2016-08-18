@@ -9,6 +9,18 @@ use Illuminate\Support\Facades\Validator;
 
 class EpisodeService
 {
+    const EPISODE_TYPE_START = 'start';
+    const EPISODE_TYPE_NORMAL = 'normal';
+    const EPISODE_TYPE_FINISH = 'finish';
+
+    public static function getAllEpisodeTypes()
+    {
+        return [
+            self::EPISODE_TYPE_START => trans('episode.type_' . self::EPISODE_TYPE_START),
+            self::EPISODE_TYPE_NORMAL => trans('episode.type_' . self::EPISODE_TYPE_NORMAL),
+            self::EPISODE_TYPE_FINISH => trans('episode.type_' . self::EPISODE_TYPE_FINISH),
+        ];
+    }
     public function getAll() {
         return Quest::all();
     }

@@ -23,6 +23,29 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
+                            <label for="type" class="col-md-2 control-label">Episode type</label>
+
+                            <div class="col-md-3">
+                                <select id="type" name="type" class="form-control">
+                                    <option disabled selected>@lang('episode.choose_type')</option>
+                                    @foreach ($types as $key => $value)
+                                        @if (old('type') == $key)
+                                            <option selected value="{{ $key }}">{{ $value }}</option>
+                                        @else
+                                            <option value="{{ $key }}">{{ $value }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+
+                                @if ($errors->has('type'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('type') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('content') ? ' has-error' : '' }}">
                             <label for="content" class="col-md-2 control-label">Episode text</label>
 
@@ -42,7 +65,8 @@
                                     @include('web/episode/partial/episode_action', [
                                         'episodes' => $episodes,
                                         'action_index' => $action_index,
-                                        'action_content' => $action_data['content']
+                                        'action_content' => $action_data['content'],
+                                        'quest_id' => $quest->id,
                                     ])
                                 @endforeach
                             @else

@@ -39,6 +39,7 @@ class EpisodeRequest extends Request
             'title' => 'required',
             'quest_id' => 'required|integer',
             'content' => 'required|max:4000',
+            'type' => 'required|valid_episode_type',
             'actions_list.*.content' => 'required'
         ];
     }

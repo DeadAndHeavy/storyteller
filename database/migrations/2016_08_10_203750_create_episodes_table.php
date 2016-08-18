@@ -16,9 +16,11 @@ class CreateEpisodesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('content');
+            $table->string('type');
             $table->integer('quest_id')->unsigned();
             $table->foreign('quest_id')->references('id')->on('quests')->onDelete('cascade');
             $table->index('quest_id');
+            $table->index('type');
             $table->timestamps();
         });
     }
