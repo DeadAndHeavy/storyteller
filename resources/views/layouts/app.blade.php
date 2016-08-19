@@ -10,6 +10,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ URL::asset('bootstrap/dist/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('bootstrap/dist/css/bootstrap-theme.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/dataTables.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('css/storyteller.css') }}">
 
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
@@ -75,6 +76,8 @@
     <!-- JavaScripts -->
     <script src="{{ URL::asset('js/jquery-3.1.0.min.js') }}"></script>
     <script src="{{ URL::asset('bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ URL::asset('js/dataTables.bootstrap.min.js') }}"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
     <script type="text/javascript" src="{{ URL::asset('js/quest.js') }}"></script>
 </body>

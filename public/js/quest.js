@@ -50,7 +50,17 @@ $(document).on('change', '.scenario-episode-selector', function ()
     $.get("/scenario/renderNewStep", {questId: $(this).data('quest_id'), currentEpisodeId: this.value}, function (data)
     {
         $(scenario_step).replaceWith(data);
-        //$("#scenario_steps").append(data);
     });
-    //$(this).parents('.scenario_step').remove();
 });
+
+$(document).ready(function() {
+    $('#episodes_table').DataTable({
+        "columnDefs": [
+            {
+                "targets": [ 3 ],
+                "searchable": false,
+                "sortable": false
+            }
+        ]
+    });
+} );

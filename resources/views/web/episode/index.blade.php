@@ -17,14 +17,18 @@
                     </div>
                     <div class="top-buffer" id="episodes">
                         @if (count($episodes))
-                            <table class="table table-bordered">
+                            <table id="episodes_table" class="table table-bordered">
+                                <thead>
                                 <tr class="active">
-                                    <td class="col-md-3 text-center vertical-align">Episode title</td>
-                                    <td class="col-md-1 text-center vertical-align">Episode type</td>
-                                    <td class="col-md-1 text-center vertical-align">Actions count</td>
-                                    <td class="col-md-2 text-center vertical-align">Actions</td>
+                                    <th>Episode title</th>
+                                    <th>Episode type</th>
+                                    <th>Actions count</th>
+                                    <th>Actions</th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 @each('web.episode.partial.episode', $episodes, 'episode')
+                                </tbody>
                             </table>
                         @else
                             No episodes
