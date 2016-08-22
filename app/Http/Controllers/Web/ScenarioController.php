@@ -28,6 +28,13 @@ class ScenarioController extends Controller
         ]);
     }
 
+    public function save(Request $request)
+    {
+        var_dump($request->all());die;
+        $this->episodeService->store($request->all());
+        return redirect(route('all_episodes', $request->questId));
+    }
+
     public function renderNewStep(Request $request)
     {
         $questId = $request->get('questId');

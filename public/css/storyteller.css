@@ -126,3 +126,9 @@ body {
 }
 
 .top-buffer { margin-top:20px; }
+.bottom-buffer {margin-bottom:20px; }
+.vertical-buffer {margin: 20px 0; }
+
+a {
+    outline: 0;
+}

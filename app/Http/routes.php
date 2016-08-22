@@ -31,5 +31,6 @@ Route::group(['namespace' => 'Web'], function() {
         Route::get('/quest/{questId}/scenario', 'ScenarioController@index')->name('scenario');
         Route::post('/quest/{questId}/scenario/save', 'ScenarioController@save')->name('save_scenario');
         Route::get('/scenario/renderNewStep', 'ScenarioController@renderNewStep');
+        Route::post('/quest/{questId}/scenario', 'ScenarioController@save')->name('save_scenario');
     });
 });

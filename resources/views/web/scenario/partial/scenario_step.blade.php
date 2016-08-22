@@ -19,6 +19,9 @@
                         @endforeach
                     </select>
                 </div>
+                <button type="button" class="btn btn-danger pull-right remove_scenario_step" title="Delete scenario step">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
             </div>
             @if ($currentEpisode)
                 <div class="col-md-12 form-group">

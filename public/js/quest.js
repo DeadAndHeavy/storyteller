@@ -36,29 +36,24 @@ $(document).on('click', '.delete_episode_action', function ()
     $("#add_episode_action").prop('disabled', false);
 });
 
-$(document).on('click', '#add_scenario_step', function ()
-{
-    $.get("/scenario/renderNewStep", {questId: $(this).data('quest_id')}, function (data)
-    {
-        $("#scenario_steps").append(data);
-    });
-});
-
-$(document).on('change', '.scenario-episode-selector', function ()
-{
-    var scenario_step = $(this).parents('.scenario_step');
-    $.get("/scenario/renderNewStep", {questId: $(this).data('quest_id'), currentEpisodeId: this.value}, function (data)
-    {
-        $(scenario_step).replaceWith(data);
-    });
-});
-
 $(document).ready(function() {
     $('#episodes_table').DataTable({
         "columnDefs": [
             {
                 "targets": [ 3 ],
                 "searchable": false,
+                "sortable": false
+            }
+        ]
+    });
+} );
+
+$(document).ready(function() {
+    $('#scenario_table').DataTable({
+        "bPaginate": false,
+        "columnDefs": [
+            {
+                "targets": [ 2 ],
                 "sortable": false
             }
         ]
