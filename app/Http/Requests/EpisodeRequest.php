@@ -39,7 +39,7 @@ class EpisodeRequest extends Request
             'title' => 'required',
             'quest_id' => 'required|integer',
             'content' => 'required|max:4000',
-            'type' => 'required|valid_episode_type',
+            'type' => 'required|valid_episode_type|unique_episode_type:' . $this->type . ',' . $this->quest_id . ',' . $this->episode_id,
             'actions_list.*.content' => 'required'
         ];
     }

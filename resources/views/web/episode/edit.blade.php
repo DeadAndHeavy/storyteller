@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
+<div class="container edit_episode_page">
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -10,6 +10,7 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="PATCH">
                         <input id="quest_id" type="hidden" name="quest_id" value="{{ $questId }}">
+                        <input id="episode_id" type="hidden" name="episode_id" value="{{ $episode->id }}">
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                             <label for="title" class="col-md-2 control-label">Episode short title</label>
 

@@ -22,6 +22,18 @@ class EpisodeServiceProvider extends ServiceProvider
             },
             'Bad episode type'
         );
+
+        Validator::extend('unique_episode_type',
+            function ($attribute, $value, $parameters)
+            {
+                if ($parameters[0] != EpisodeService::EPISODE_TYPE_START) {
+                    return true;
+                }
+                $startEpisode = EpisodeService::getStartEpisode($parameters[1]);
+                return  is_null($startEpisode) || (!is_null($startEpisode) && $parameters[2] && $startEpisode->id == $parameters[2]);
+            },
+            'Episode with this type already exists'
+        );
     }
 
     /**

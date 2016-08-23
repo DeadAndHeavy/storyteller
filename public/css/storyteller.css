@@ -2,6 +2,11 @@ textarea {
     resize: none;
 }
 
+@font-face {
+    font-family: Segoe;
+    src: url('../fonts/segoe.ttf');
+}
+
 .vertical-align {
     vertical-align: middle !important;
 }
@@ -126,9 +131,21 @@ body {
 }
 
 .top-buffer { margin-top:20px; }
+.top-buffer-2 {margin-top:40px;}
 .bottom-buffer {margin-bottom:20px; }
+.bottom-buffer-2 {margin-bottom:40px; }
 .vertical-buffer {margin: 20px 0; }
+.without-vertical-buffer {margin-top: 0; margin-bottom: 0;}
 
 a {
     outline: 0;
+}
+
+#play-zone {
+    background: url('../img/play_background.jpg');
+    -moz-background-size: 100%; /* Firefox 3.6+ */
+    -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
+    -o-background-size: 100%; /* Opera 9.6+ */
+    background-size: 100%; /* Современные браузеры */
+    font-family: Segoe;
 }

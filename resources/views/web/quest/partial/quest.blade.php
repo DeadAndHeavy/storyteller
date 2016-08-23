@@ -12,6 +12,9 @@
         <a href="{{ route('scenario', ['id' => $quest->id]) }}" class="btn btn-epic" title="Quest scenario">
             <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
         </a>
+        <a href="{{ route('play_quest', ['id' => $quest->id]) }}" class="btn btn-info" title="Play quest">
+            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+        </a>
         <form class="delete_quest" style="display:inline" role="form" action="{{ route('delete_quest', ['id' => $quest->id]) }}" method="POST">
             <input type="hidden" name="_method" value="DELETE">
             {{ csrf_field() }}

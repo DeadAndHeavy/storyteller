@@ -65,8 +65,13 @@ class EpisodeService
         Episode::destroy($id);
     }
 
-    /*public function addEpisode($episodeData)
+    public function setEpisodeActionTargetId($episodeActionId, $targetEpisodeId)
     {
-        Episode::create($episodeData);
-    }*/
+        EpisodeAction::find($episodeActionId)->update(['target_episode_id' => $targetEpisodeId]);
+    }
+
+    public static function getStartEpisode($questId)
+    {
+        return Episode::where('quest_id', $questId)->where('type', self::EPISODE_TYPE_START)->first();
+    }
 }

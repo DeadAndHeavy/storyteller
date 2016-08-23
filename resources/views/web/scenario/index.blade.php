@@ -18,30 +18,38 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($episodes as $episode)
+                                @foreach ($episodes as $currentEpisode)
                                     <tr>
-                                        <td class="vertical-align">{{ $episode->title }}</td>
-                                        <td class="text-center vertical-align">{{ $episode->type }}</td>
+                                        <td class="vertical-align">{{ $currentEpisode->title }}</td>
+                                        <td class="text-center vertical-align">{{ $currentEpisode->type }}</td>
                                         <td class="vertical-align">
-                                            <table class="table-bordered">
-                                                @foreach ($episode->episodeActions as $episodeAction)
-                                                    <tr>
-                                                        <td class="col-md-8">{{ $episodeAction->content }}</td>
-                                                        <td class="col-md-4">
-                                                            <select name="scenario_episode_action_target_id[{{ $episodeAction->id }}]" class="form-control col-md-4">
-                                                                <option disabled selected>@lang('scenario.choose_target')</option>
-                                                                @foreach ($episodes as $episode)
-                                                                    @if ($episode->id == $episodeAction->target_episode_id)
-                                                                        <option selected value="{{ $episode->id }}">{{ $episode->title }}</option>
-                                                                    @else
-                                                                        <option value="{{ $episode->id }}">{{ $episode->title }}</option>
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </table>
+                                            <div class="col-md-12">
+                                                <table class="table table-bordered without-vertical-buffer">
+                                                    @foreach ($currentEpisode->episodeActions as $episodeAction)
+                                                        @if ($episodeAction->target_episode_id || $currentEpisode->type == \App\Core\Service\EpisodeService::EPISODE_TYPE_FINISH)
+                                                            <tr class="success">
+                                                        @else
+                                                            <tr class="warning">
+                                                        @endif
+                                                            <td class="col-md-8 vertical-align">{{ $episodeAction->content }}</td>
+                                                            @if ($currentEpisode->type != \App\Core\Service\EpisodeService::EPISODE_TYPE_FINISH)
+                                                                <td class="col-md-4">
+                                                                    <select name="scenario_episode_action_targets[{{ $episodeAction->id }}]" class="form-control">
+                                                                        <option disabled selected>@lang('scenario.choose_target')</option>
+                                                                        @foreach ($episodes as $episode)
+                                                                            @if ($episode->id == $episodeAction->target_episode_id)
+                                                                                <option selected value="{{ $episode->id }}">{{ $episode->title }}</option>
+                                                                            @else
+                                                                                <option value="{{ $episode->id }}">{{ $episode->title }}</option>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                            @endif
+                                                        </tr>
+                                                    @endforeach
+                                                </table>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

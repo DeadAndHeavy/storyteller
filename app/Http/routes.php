@@ -13,7 +13,7 @@ Route::get('/quest', 'Web\QuestController@index');
 
 Route::group(['namespace' => 'Web'], function() {
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/quest/own', 'QuestController@ownQuests');
+        Route::get('/quest/own', 'QuestController@ownQuests')->name('own_quests');
         Route::get('/quest/create', 'QuestController@create')->name('create_quest');
         Route::post('/quest', 'QuestController@store');
         Route::get('/quest/{id}/edit', 'QuestController@edit')->name('edit_quest');
@@ -32,5 +32,8 @@ Route::group(['namespace' => 'Web'], function() {
         Route::post('/quest/{questId}/scenario/save', 'ScenarioController@save')->name('save_scenario');
         Route::get('/scenario/renderNewStep', 'ScenarioController@renderNewStep');
         Route::post('/quest/{questId}/scenario', 'ScenarioController@save')->name('save_scenario');
+        Route::get('/quest/{questId}/play', 'ScenarioController@play')->name('play_quest');
+        Route::get('/quest/{questId}/playAction', 'ScenarioController@playAction')->name('play_action');
+        Route::get('/scenario/renderNewEpisodeStep', 'ScenarioController@renderNewScenarioStep');
     });
 });

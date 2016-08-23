@@ -6,6 +6,7 @@ use App\Core\Service\EpisodeService;
 use App\Episode;
 use App\Http\Controllers\Controller;
 use App\Core\Service\QuestService;
+use App\Quest;
 use Illuminate\Http\Request;
 
 class ScenarioController extends Controller
@@ -30,20 +31,28 @@ class ScenarioController extends Controller
 
     public function save(Request $request)
     {
-        var_dump($request->all());die;
-        $this->episodeService->store($request->all());
-        return redirect(route('all_episodes', $request->questId));
+        $targets = $request->get('scenario_episode_action_targets');
+
+        foreach ($targets as $episodeActionId => $targetEpisodeId) {
+            $this->episodeService->setEpisodeActionTargetId($episodeActionId, $targetEpisodeId);
+        }
+
+        return redirect(route('own_quests'));
     }
 
-    public function renderNewStep(Request $request)
+    public function renderNewScenarioStep(Request $request)
     {
-        $questId = $request->get('questId');
-        $currentEpisodeId = $request->get('currentEpisodeId');
-        $episodes = Episode::where('quest_id', $questId)->with('quest', 'episodeActions')->get();
+        $targetEpisode = Episode::find($request->get('targetEpisodeId'));
         return view('web/scenario/partial/scenario_step', [
-            'questId' => $questId,
-            'episodes' => $episodes,
-            'currentEpisode' => $currentEpisodeId ? Episode::find($currentEpisodeId) : null,
+            'episode' => $targetEpisode
         ])->render();
+    }
+
+    public function play($questId)
+    {
+        return view('web/scenario/play', [
+            'quest' => Quest::find($questId),
+            'startEpisode' => EpisodeService::getStartEpisode($questId)
+        ]);
     }
 }

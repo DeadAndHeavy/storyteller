@@ -44,7 +44,8 @@ $(document).ready(function() {
                 "searchable": false,
                 "sortable": false
             }
-        ]
+        ],
+        "order": [[ 1, "desc" ]]
     });
 } );
 
@@ -54,8 +55,26 @@ $(document).ready(function() {
         "columnDefs": [
             {
                 "targets": [ 2 ],
-                "sortable": false
+                "sortable": false,
+                "searchable": false
             }
-        ]
+        ],
+        "order": [[ 1, "desc" ]],
+        "oLanguage": {
+            "sSearch": "Search by title or type:"
+        }
     });
-} );
+});
+
+$(document).ready(function() {
+    $('.edit_episode_page #content').ckeditor();
+});
+
+$(document).on('click', '.episodeActionProcess', function ()
+{
+    var quest_episode_zone = $(this).parents('.quest-episode-zone');
+    $.get("/scenario/renderNewEpisodeStep", {targetEpisodeId: $(this).data('target-episode-id')}, function (data)
+    {
+        $(quest_episode_zone).html(data);
+    });
+});
