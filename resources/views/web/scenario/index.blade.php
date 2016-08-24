@@ -55,7 +55,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="control-buttons">
+                            <div class="control-buttons top-buffer">
                                 <a href="{{ url('/quest/own') }}" class="btn btn-info">
                                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to own quests
                                 </a>

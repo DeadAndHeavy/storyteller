@@ -50,7 +50,7 @@
                             <label for="content" class="col-md-2 control-label">Episode text</label>
 
                             <div class="col-md-10">
-                                <textarea id="content" class="form-control" noresize rows="15" spellcheck="false" name="content">{{ old('content') }}</textarea>
+                                <textarea id="content" class="form-control" noresize maxlength="4000" rows="15" spellcheck="false" name="content">{{ old('content') }}</textarea>
                                 @if ($errors->has('content'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('content') }}</strong>

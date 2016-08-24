@@ -67,7 +67,9 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $('.edit_episode_page #content').ckeditor();
+    tinymce.init({
+        selector: '.edit_episode_page #content'
+    });
 });
 
 $(document).on('click', '.episodeActionProcess', function ()
