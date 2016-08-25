@@ -161,7 +161,8 @@ return [
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         App\Providers\QuestServiceProvider::class,
-        App\Providers\EpisodeServiceProvider::class
+        App\Providers\EpisodeServiceProvider::class,
+        Mews\Purifier\PurifierServiceProvider::class,
 
     ],
 
@@ -208,6 +209,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Purifier' => Mews\Purifier\Facades\Purifier::class,
 
     ],
 

@@ -68,7 +68,21 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     tinymce.init({
-        selector: '.edit_episode_page #content'
+        selector: '.edit_episode_page #content',
+        setup : function(ed)
+        {
+            ed.on('init', function()
+            {
+                this.getDoc().body.style.fontSize = '14px';
+            });
+
+            ed.on('keyDown', function(evt) {
+                if (evt.keyCode == 9){
+                    ed.execCommand('mceInsertContent', false, '&emsp;&emsp;');
+                    evt.preventDefault();
+                }
+            });
+        }
     });
 });
 

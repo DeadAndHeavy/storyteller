@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Core\Service\EpisodeService;
 use App\Http\Requests\Request;
 
 class EpisodeRequest extends Request
@@ -38,7 +39,7 @@ class EpisodeRequest extends Request
         return [
             'title' => 'required',
             'quest_id' => 'required|integer',
-            'content' => 'required|max:4000',
+            'content' => 'required|max:' . EpisodeService::EPISODE_MAX_LENGTH,
             'type' => 'required|valid_episode_type|unique_episode_type:' . $this->type . ',' . $this->quest_id . ',' . $this->episode_id,
             'actions_list.*.content' => 'required'
         ];

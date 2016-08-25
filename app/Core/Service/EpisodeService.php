@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 
 class EpisodeService
 {
+    const EPISODE_MAX_LENGTH = 10000;
+
     const EPISODE_TYPE_START = 'start';
     const EPISODE_TYPE_NORMAL = 'normal';
     const EPISODE_TYPE_FINISH = 'finish';
