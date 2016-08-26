@@ -17,4 +17,9 @@ class Quest extends Model
     {
         return $this->hasMany('App\Episode');
     }
+
+    public function approval()
+    {
+        return $this->hasOne('App\QuestApproveQueue');
+    }
 }

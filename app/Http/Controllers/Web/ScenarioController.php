@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Core\Service\EpisodeService;
+use App\Core\Service\ScenarioService;
 use App\Episode;
 use App\Http\Controllers\Controller;
 use App\Core\Service\QuestService;
@@ -13,11 +14,16 @@ class ScenarioController extends Controller
 {
     private $questService;
     private $episodeService;
+    /**
+     * @var ScenarioService
+     */
+    private $scenarioService;
 
-    public function __construct(QuestService $questService, EpisodeService $episodeService)
+    public function __construct(QuestService $questService, EpisodeService $episodeService, ScenarioService $scenarioService)
     {
         $this->questService = $questService;
         $this->episodeService = $episodeService;
+        $this->scenarioService = $scenarioService;
     }
 
     public function index($questId)
@@ -50,6 +56,10 @@ class ScenarioController extends Controller
 
     public function play($questId)
     {
+        if (!$this->scenarioService->isValidQuest($questId)) {
+            flash('This quest is not over', 'danger');
+            return back();
+        }
         return view('web/scenario/play', [
             'quest' => Quest::find($questId),
             'startEpisode' => EpisodeService::getStartEpisode($questId)

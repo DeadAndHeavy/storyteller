@@ -56,7 +56,7 @@
                                 </tbody>
                             </table>
                             <div class="control-buttons top-buffer">
-                                <a href="{{ url('/quest/own') }}" class="btn btn-info">
+                                <a href="{{ route('own_quests') }}" class="btn btn-default">
                                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to own quests
                                 </a>
                                 <button type="submit" class="btn btn-primary">

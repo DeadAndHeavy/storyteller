@@ -163,6 +163,7 @@ return [
         App\Providers\QuestServiceProvider::class,
         App\Providers\EpisodeServiceProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
 
     ],
 

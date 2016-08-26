@@ -54,7 +54,7 @@
                             <label for="description" class="col-md-4 control-label">Quest description</label>
 
                             <div class="col-md-6">
-                                <textarea id="description" class="form-control" noresize maxlength="1000" rows="14" spellcheck="false" name="description">{{ $quest->description }}</textarea>
+                                <textarea id="description" class="form-control" noresize maxlength="3000" rows="14" spellcheck="false" name="description">{{ $quest->description }}</textarea>
 
                                 @if ($errors->has('description'))
                                     <span class="help-block">
@@ -66,12 +66,12 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
+                                <a href="{{ route('own_quests') }}" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to own quests
+                                </a>
                                 <button type="submit" class="btn btn-primary">
                                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Update
                                 </button>
-                                <a href="{{ url('/quest/own') }}" class="btn btn-info">
-                                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to own quests
-                                </a>
                             </div>
                         </div>
                     </form>

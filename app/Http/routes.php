@@ -7,18 +7,20 @@ Route::group(['prefix' => 'api/v1'], function () {
 
 Route::auth();
 
-Route::get('/', 'HomeController@index');
-
-Route::get('/quest', 'Web\QuestController@index');
-
 Route::group(['namespace' => 'Web'], function() {
+
+    Route::get('/', 'QuestController@index');
+    Route::get('/quest', 'QuestController@index');
+    Route::get('/quest/{questId}', 'QuestController@show')->name('quest_page')->where('questId', '[0-9]+');;
+
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/quest/own', 'QuestController@ownQuests')->name('own_quests');
         Route::get('/quest/create', 'QuestController@create')->name('create_quest');
         Route::post('/quest', 'QuestController@store');
-        Route::get('/quest/{id}/edit', 'QuestController@edit')->name('edit_quest');
-        Route::patch('/quest/{id}', 'QuestController@update');
-        Route::delete('/quest/{id}', 'QuestController@destroy')->name('delete_quest');
+        Route::get('/quest/{questId}/edit', 'QuestController@edit')->name('edit_quest');
+        Route::patch('/quest/{questId}', 'QuestController@update');
+        Route::delete('/quest/{questId}', 'QuestController@destroy')->name('delete_quest');
+        Route::post('/quest/{questId}/approve', 'QuestController@approve')->name('approve_quest');;
 
         Route::get('/quest/{questId}/episode', 'EpisodeController@index')->name('all_episodes');
         Route::get('/quest/{questId}/episode/create', 'EpisodeController@create')->name('create_episode');

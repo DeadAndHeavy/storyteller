@@ -89,12 +89,12 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-2">
+                                <a href="{{ route('all_episodes', ['questId' => $quest->id]) }}" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to episodes
+                                </a>
                                 <button type="submit" class="btn btn-primary">
                                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Create episode
                                 </button>
-                                <a href="{{ route('all_episodes', ['questId' => $quest->id]) }}" class="btn btn-info">
-                                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to episodes
-                                </a>
                             </div>
                         </div>
                     </form>

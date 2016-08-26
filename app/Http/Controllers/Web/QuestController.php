@@ -27,6 +27,14 @@ class QuestController extends Controller
         ]);
     }
 
+    public function show($questId)
+    {
+        $quest = Quest::find($questId);
+        return view('web/quest/show', [
+            'quest' => $quest,
+        ]);
+    }
+
     public function ownQuests()
     {
         $ownQuests = $this->questService->getOwn();
@@ -48,23 +56,29 @@ class QuestController extends Controller
         return redirect('/quest/own');
     }
 
-    public function edit($id)
+    public function edit($questId)
     {
         return view('web/quest/edit', [
-            'quest' => Quest::find($id),
+            'quest' => Quest::find($questId),
             'genres' => $this->questService->getAllQuestGenres(),
         ]);
     }
 
     public function update(QuestRequest $request)
     {
-        $this->questService->update($request->id, $request->all());
+        $this->questService->update($request->questId, $request->all());
         return redirect('/quest/own');
     }
 
-    public function destroy($id)
+    public function destroy($questId)
     {
-        $this->questService->destroy($id);
+        $this->questService->destroy($questId);
         return redirect('/quest/own');
+    }
+
+    public function approve($questId)
+    {
+        $this->questService->sendForApprove($questId);
+        return back();
     }
 }
