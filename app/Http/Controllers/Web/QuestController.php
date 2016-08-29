@@ -21,7 +21,7 @@ class QuestController extends Controller
 
     public function index()
     {
-        $quests = $this->questService->getAll();
+        $quests = $this->questService->getApproved();
         return view('web/quest/index', [
             'quests' => $quests
         ]);
@@ -74,11 +74,5 @@ class QuestController extends Controller
     {
         $this->questService->destroy($questId);
         return redirect('/quest/own');
-    }
-
-    public function approve($questId)
-    {
-        $this->questService->sendForApprove($questId);
-        return back();
     }
 }

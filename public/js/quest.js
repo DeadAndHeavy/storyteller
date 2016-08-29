@@ -94,3 +94,12 @@ $(document).on('click', '.episodeActionProcess', function ()
         $(quest_episode_zone).html(data);
     });
 });
+
+$(document).ready(function() {
+    $('#rejectQuestModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var route = button.data('reject_route');
+        var modal = $(this);
+        modal.find('form.reject_quest').attr('action', route);
+    });
+});

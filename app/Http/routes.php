@@ -20,7 +20,7 @@ Route::group(['namespace' => 'Web'], function() {
         Route::get('/quest/{questId}/edit', 'QuestController@edit')->name('edit_quest');
         Route::patch('/quest/{questId}', 'QuestController@update');
         Route::delete('/quest/{questId}', 'QuestController@destroy')->name('delete_quest');
-        Route::post('/quest/{questId}/approve', 'QuestController@approve')->name('approve_quest');;
+        Route::post('/quest/{questId}/submit_for_approving', 'ApproveController@submitForApproving')->name('submit_for_approving');
 
         Route::get('/quest/{questId}/episode', 'EpisodeController@index')->name('all_episodes');
         Route::get('/quest/{questId}/episode/create', 'EpisodeController@create')->name('create_episode');
@@ -37,5 +37,11 @@ Route::group(['namespace' => 'Web'], function() {
         Route::get('/quest/{questId}/play', 'ScenarioController@play')->name('play_quest');
         Route::get('/quest/{questId}/playAction', 'ScenarioController@playAction')->name('play_action');
         Route::get('/scenario/renderNewEpisodeStep', 'ScenarioController@renderNewScenarioStep');
+
+        Route::group(['middleware' => 'admin'], function () {
+            Route::get('/quest_approving', 'ApproveController@index')->name('quests_for_approving');
+            Route::patch('/quest_approving/{questId}/approve', 'ApproveController@approve')->name('approve_quest');
+            Route::patch('/quest_approving/{questId}/reject', 'ApproveController@reject')->name('reject_quest');
+        });
     });
 });

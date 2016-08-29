@@ -46,6 +46,9 @@
                     @if (Auth::check())
                         <li><a href="{{ url('/quest/own') }}">Your Quests</a></li>
                         <li><a href="{{ url('/quest/create') }}">Create Quest</a></li>
+                        @if (Auth::user()->isAdmin())
+                            <li><a href="{{ url('/quest_approving') }}">Quest Approving <span class="badge">{{ \App\Core\Service\QuestApproveService::getNotApprovedForBadge() }}</span></a></li>
+                        @endif
                     @endif
                 </ul>
 

@@ -24,6 +24,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function isAdmin()
+    {
+        return $this->is_admin;
+    }
+
     public function quests()
     {
         return $this->hasMany('App\Quest');

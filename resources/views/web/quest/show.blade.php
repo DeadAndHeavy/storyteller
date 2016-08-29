@@ -22,17 +22,26 @@
                         </tr>
                         <tr>
                             <td class="col-md-2 text-center vertical-align">Author</td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="col-md-2 text-center vertical-align">Approve status</td>
                             <td>{{ $quest->author->name }}</td>
                         </tr>
+                        @if (Auth::check() && Auth::user()->id == $quest->user_id && $quest->approval)
+                            <tr>
+                                <td class="col-md-2 text-center vertical-align">Approve status</td>
+                                <td class="vertical-align">
+                                    {{ \App\Core\Service\QuestApproveService::getApproveStatusList()[$quest->approval->approve_status] }}
+                                </td>
+                            </tr>
+                            @if ($quest->approval->approve_status == \App\Core\Service\QuestApproveService::QUEST_APPROVE_STATUS_REJECTED)
+                                <tr class="danger">
+                                    <td class="col-md-2 text-center vertical-align">Reject reason</td>
+                                    <td>{{ $quest->approval->message }}</td>
+                                </tr>
+                            @endif
+                        @endif
                     </table>
                     <div>
-                        <a href="{{ URL::previous() }}" class="btn btn-default" title="Back to previous page">
-                            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+                        <a href="{{ route('own_quests') }}" class="btn btn-default" title="Back to own quests">
+                            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to own quests
                         </a>
                         @if (Auth::check())
                             @if (Auth::user()->id == $quest->user_id)
@@ -52,13 +61,22 @@
                                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
                                     </button>
                                 </form>
-                                @if (!$quest->inApproveQueue)
-                                <form class="approve_quest" style="display:inline" role="form" action="{{ route('approve_quest', ['questId' => $quest->id]) }}" method="POST">
-                                    {{ csrf_field() }}
-                                    <button type="submit" class="btn btn-success" title="Send quest to approving">
-                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Approve
-                                    </button>
-                                </form>
+                                @if ($quest->approval)
+                                    @if ($quest->approval->approve_status == \App\Core\Service\QuestApproveService::QUEST_APPROVE_STATUS_REJECTED)
+                                        <form class="submit_for_approving" style="display:inline" role="form" action="{{ route('submit_for_approving', ['questId' => $quest->id]) }}" method="POST">
+                                            {{ csrf_field() }}
+                                            <button type="submit" class="btn btn-success" title="Submit for approving again">
+                                                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Submit for approving again
+                                            </button>
+                                        </form>
+                                    @endif
+                                @else
+                                    <form class="submit_for_approving" style="display:inline" role="form" action="{{ route('submit_for_approving', ['questId' => $quest->id]) }}" method="POST">
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn btn-success" title="Submit for approving">
+                                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Submit for approving
+                                        </button>
+                                    </form>
                                 @endif
                             @endif
                             <a href="{{ route('play_quest', ['questId' => $quest->id]) }}" class="btn btn-info" title="Play quest">
