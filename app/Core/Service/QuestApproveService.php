@@ -34,7 +34,7 @@ class QuestApproveService
         return QuestApproveQueue::where('approve_status', self::QUEST_APPROVE_STATUS_NOT_APPROVED)->get();
     }
 
-    public static function getNotApprovedForBadge()
+    public static function getNotApprovedCount()
     {
         return QuestApproveQueue::where('approve_status', self::QUEST_APPROVE_STATUS_NOT_APPROVED)->get()->count();
     }

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Core\Service\QuestService;
 use App\Quest;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ScenarioController extends Controller
 {
@@ -28,6 +29,10 @@ class ScenarioController extends Controller
 
     public function index($questId)
     {
+        if (!$this->questService->isOwnQuest($questId)) {
+            throw new BadRequestHttpException();
+        }
+
         $episodes = Episode::where('quest_id', $questId)->with('quest', 'episodeActions')->get();
         return view('web/scenario/index', [
             'questId' => $questId,
@@ -40,7 +45,9 @@ class ScenarioController extends Controller
         $targets = $request->get('scenario_episode_action_targets');
 
         foreach ($targets as $episodeActionId => $targetEpisodeId) {
-            $this->episodeService->setEpisodeActionTargetId($episodeActionId, $targetEpisodeId);
+            if ($this->episodeService->isOwnEpisodeAction($episodeActionId) && $this->episodeService->isOwnEpisode($targetEpisodeId)) {
+                $this->episodeService->setEpisodeActionTargetId($episodeActionId, $targetEpisodeId);
+            }
         }
 
         return redirect(route('own_quests'));

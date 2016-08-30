@@ -2,26 +2,33 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Episode;
+use App\Core\Service\ScenarioService;
+use App\Core\Service\VoteService;
 use App\Http\Controllers\Controller;
 use App\Core\Service\QuestService;
-use App\Http\Requests\EpisodeRequest;
 use App\Http\Requests\QuestRequest;
 use App\Quest;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class QuestController extends Controller
 {
     private $questService;
+    /**
+     * @var VoteService
+     */
+    private $voteService;
 
-    public function __construct(QuestService $questService)
+    public function __construct(QuestService $questService, VoteService $voteService)
     {
         $this->questService = $questService;
+        $this->voteService = $voteService;
     }
 
     public function index()
     {
         $quests = $this->questService->getApproved();
+
         return view('web/quest/index', [
             'quests' => $quests
         ]);
@@ -30,6 +37,7 @@ class QuestController extends Controller
     public function show($questId)
     {
         $quest = Quest::find($questId);
+
         return view('web/quest/show', [
             'quest' => $quest,
         ]);
@@ -38,6 +46,7 @@ class QuestController extends Controller
     public function ownQuests()
     {
         $ownQuests = $this->questService->getOwn();
+
         return view('web/quest/own_quests', [
             'quests' => $ownQuests
         ]);
@@ -53,11 +62,16 @@ class QuestController extends Controller
     public function store(QuestRequest $request)
     {
         $this->questService->store($request->all());
+
         return redirect('/quest/own');
     }
 
     public function edit($questId)
     {
+        if (!$this->questService->isOwnQuest($questId)) {
+            throw new BadRequestHttpException();
+        }
+
         return view('web/quest/edit', [
             'quest' => Quest::find($questId),
             'genres' => $this->questService->getAllQuestGenres(),
@@ -66,13 +80,37 @@ class QuestController extends Controller
 
     public function update(QuestRequest $request)
     {
+        if (!$this->questService->isOwnQuest($request->questId)) {
+            throw new BadRequestHttpException();
+        }
+
         $this->questService->update($request->questId, $request->all());
+
         return redirect('/quest/own');
     }
 
     public function destroy($questId)
     {
+        if (!$this->questService->isOwnQuest($questId)) {
+            throw new BadRequestHttpException();
+        }
+
         $this->questService->destroy($questId);
+
         return redirect('/quest/own');
+    }
+
+    public function like($questId)
+    {
+        $this->voteService->store($questId, Auth::user()->id, VoteService::VOTE_TYPE_LIKE);
+
+        return Quest::find($questId)->votes->pluck('type')->sum();
+    }
+
+    public function dislike($questId)
+    {
+        $this->voteService->store($questId, Auth::user()->id, VoteService::VOTE_TYPE_DISLIKE);
+
+        return Quest::find($questId)->votes->pluck('type')->sum();
     }
 }

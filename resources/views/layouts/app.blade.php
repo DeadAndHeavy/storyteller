@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Storyteller</title>
 
@@ -47,7 +48,13 @@
                         <li><a href="{{ url('/quest/own') }}">Your Quests</a></li>
                         <li><a href="{{ url('/quest/create') }}">Create Quest</a></li>
                         @if (Auth::user()->isAdmin())
-                            <li><a href="{{ url('/quest_approving') }}">Quest Approving <span class="badge">{{ \App\Core\Service\QuestApproveService::getNotApprovedForBadge() }}</span></a></li>
+                            <li>
+                                <a href="{{ url('/quest_approving') }}">Quest Approving
+                                    @if (\App\Core\Service\QuestApproveService::getNotApprovedCount() > 0)
+                                        <span class="badge">{{ \App\Core\Service\QuestApproveService::getNotApprovedCount() }}</span>
+                                    @endif
+                                </a>
+                            </li>
                         @endif
                     @endif
                 </ul>

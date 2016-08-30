@@ -9,6 +9,7 @@ use App\Core\Service\QuestService;
 use App\Http\Requests\EpisodeRequest;
 use App\Quest;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class EpisodeController extends Controller
 {
@@ -23,7 +24,12 @@ class EpisodeController extends Controller
 
     public function index($questId)
     {
+        if (!$this->questService->isOwnQuest($questId)) {
+            throw new BadRequestHttpException();
+        }
+
         $episodes = Episode::where('quest_id', $questId)->with('quest', 'episodeActions')->get();
+
         return view('web/episode/index', [
             'questId' => $questId,
             'episodes' => $episodes
@@ -32,18 +38,25 @@ class EpisodeController extends Controller
 
     public function create($questId)
     {
-        $quest = Quest::find($questId);
-        $episodes = Episode::where('quest_id', $questId)->get();
+        if (!$this->questService->isOwnQuest($questId)) {
+            throw new BadRequestHttpException();
+        }
+
         return view('web/episode/create', [
-            'quest' => $quest,
-            'episodes' => $episodes,
+            'quest' => Quest::find($questId),
+            'episodes' => Episode::where('quest_id', $questId)->get(),
             'types' => $this->episodeService->getAllEpisodeTypes(),
         ]);
     }
 
     public function store(EpisodeRequest $request)
     {
+        if (!$this->questService->isOwnQuest($request->questId)) {
+            throw new BadRequestHttpException();
+        }
+
         $this->episodeService->store($request->all());
+
         return redirect(route('all_episodes', $request->questId));
     }
 
@@ -51,6 +64,7 @@ class EpisodeController extends Controller
     {
         $questId = $request->get('questId');
         $episodes = Episode::where('quest_id', $questId)->get();
+
         return view('web/episode/partial/episode_action', [
             'action_index' => $request->get('actionIndex'),
             'action_content' => '',
@@ -61,6 +75,10 @@ class EpisodeController extends Controller
 
     public function edit($questId, $episodeId)
     {
+        if (!$this->questService->isOwnQuest($questId)) {
+            throw new BadRequestHttpException();
+        }
+
         return view('web/episode/edit', [
             'questId' => $questId,
             'episode' => Episode::find($episodeId),
@@ -70,13 +88,23 @@ class EpisodeController extends Controller
 
     public function update(EpisodeRequest $request)
     {
+        if (!$this->questService->isOwnQuest($request->episodeId)) {
+            throw new BadRequestHttpException();
+        }
+
         $this->episodeService->update($request->episodeId, $request->all());
+
         return redirect(route('all_episodes', ['questId' => $request->questId]));
     }
 
     public function destroy($questId, $episodeId)
     {
+        if (!$this->questService->isOwnQuest($questId)) {
+            throw new BadRequestHttpException();
+        }
+
         $this->episodeService->destroy($episodeId);
+
         return redirect(route('all_episodes', ['questId' => $questId]));
     }
 }

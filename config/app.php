@@ -162,6 +162,8 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         App\Providers\QuestServiceProvider::class,
         App\Providers\EpisodeServiceProvider::class,
+        App\Providers\QuestApproveProvider::class,
+        App\Providers\VoteProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
 

@@ -11,17 +11,17 @@
                     @if (count($questsForApproving))
                         <table class="table table-bordered">
                             <tr class="active">
-                                <td class="col-md-2 text-center vertical-align">Quest name</td>
+                                <td class="col-md-4 text-center vertical-align">Quest name</td>
                                 <td class="col-md-2 text-center vertical-align">Author</td>
-                                <td class="col-md-4 text-center vertical-align">Approve Actions</td>
+                                <td class="col-md-2 text-center vertical-align">Approve Actions</td>
                             </tr>
                             @foreach ($questsForApproving as $questForApproving)
                                 <tr class="active">
-                                    <td class="col-md-2 text-center vertical-align">
+                                    <td class="text-center vertical-align">
                                         <a href="{{ route('quest_page', ['questId' => $questForApproving->quest_id]) }}">{{ $questForApproving->quest->name }}</a>
                                     </td>
-                                    <td class="col-md-2 text-center vertical-align">{{ $questForApproving->quest->author->name }}</td>
-                                    <td>
+                                    <td class="text-center vertical-align">{{ $questForApproving->quest->author->name }}</td>
+                                    <td class="text-center">
                                         <form class="approve_quest" style="display:inline" role="form" action="{{ route('approve_quest', ['questId' => $questForApproving->quest_id]) }}" method="POST">
                                             {{ csrf_field() }}
                                             <input type="hidden" name="_method" value="PATCH">

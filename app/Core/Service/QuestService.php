@@ -21,6 +21,11 @@ class QuestService
         ];
     }
 
+    public function isOwnQuest($questId)
+    {
+        return Quest::find($questId)->user_id == Auth::user()->id;
+    }
+
     public function getAll() {
         return Quest::all();
     }

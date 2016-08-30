@@ -9,7 +9,7 @@ Route::auth();
 
 Route::group(['namespace' => 'Web'], function() {
 
-    Route::get('/', 'QuestController@index');
+    Route::get('/', 'QuestController@index')->name('public_quests');
     Route::get('/quest', 'QuestController@index');
     Route::get('/quest/{questId}', 'QuestController@show')->name('quest_page')->where('questId', '[0-9]+');;
 
@@ -21,6 +21,8 @@ Route::group(['namespace' => 'Web'], function() {
         Route::patch('/quest/{questId}', 'QuestController@update');
         Route::delete('/quest/{questId}', 'QuestController@destroy')->name('delete_quest');
         Route::post('/quest/{questId}/submit_for_approving', 'ApproveController@submitForApproving')->name('submit_for_approving');
+        Route::post('/quest/{questId}/like','QuestController@like')->name('like_quest');
+        Route::post('/quest/{questId}/dislike','QuestController@dislike')->name('dislike_quest');
 
         Route::get('/quest/{questId}/episode', 'EpisodeController@index')->name('all_episodes');
         Route::get('/quest/{questId}/episode/create', 'EpisodeController@create')->name('create_episode');

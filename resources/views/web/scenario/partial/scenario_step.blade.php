@@ -8,7 +8,7 @@
         @endforeach
     @else
         @foreach ($episode->episodeActions as $episodeAction)
-            <a class="episodeActionProcess" href="{{ route('own_quests') }}">{{ $episodeAction->content }}</a><br>
+            <a class="episodeActionProcess" href="{{ route('public_quests') }}">{{ $episodeAction->content }}</a><br>
         @endforeach
     @endif
 </div>

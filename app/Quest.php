@@ -22,4 +22,9 @@ class Quest extends Model
     {
         return $this->hasOne('App\QuestApproveQueue');
     }
+
+    public function votes()
+    {
+        return $this->hasMany('App\Vote');
+    }
 }

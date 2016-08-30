@@ -9,14 +9,22 @@
 
                 <div class="panel-body">
                     @if (count($quests))
-                        <table class="table table-bordered">
-                            <tr class="active">
-                                <td class="col-md-2 text-center vertical-align">Quest name</td>
-                                <td class="col-md-4 text-center vertical-align">Quest description</td>
-                                <td class="col-md-1 text-center vertical-align">Quest genre</td>
-                                <td class="col-md-2 text-center vertical-align">Author</td>
-                            </tr>
-                            @each('web/quest/partial/quest_without_actions', $quests, 'quest')
+                        <table id="public_quests_table" class="table table-bordered">
+                            <thead>
+                                <tr class="active">
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Genre</th>
+                                    <th>Author</th>
+                                    <th>Rating</th>
+                                    @if (Auth::check())
+                                        <th>Actions</th>
+                                    @endif
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @each('web/quest/partial/public_quest', $quests, 'quest')
+                            </tbody>
                         </table>
                     @else
                         No quests

@@ -5,6 +5,7 @@ namespace App\Core\Service;
 use App\Episode;
 use App\EpisodeAction;
 use App\Quest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class EpisodeService
@@ -23,7 +24,19 @@ class EpisodeService
             self::EPISODE_TYPE_FINISH => trans('episode.type_' . self::EPISODE_TYPE_FINISH),
         ];
     }
-    public function getAll() {
+
+    public function isOwnEpisode($episodeId)
+    {
+        return Episode::find($episodeId)->quest->user_id == Auth::user()->id;
+    }
+
+    public function isOwnEpisodeAction($episodeActionId)
+    {
+        return EpisodeAction::find($episodeActionId)->episode->quest->user_id == Auth::user()->id;
+    }
+
+    public function getAll()
+    {
         return Quest::all();
     }
 

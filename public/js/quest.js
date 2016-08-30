@@ -67,6 +67,19 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
+    $('#public_quests_table').DataTable({
+        "columnDefs": [
+            {
+                "targets": [ 5 ],
+                "sortable": false,
+                "searchable": false
+            }
+        ],
+        "order": [[ 4, "desc" ]]
+    });
+});
+
+$(document).ready(function() {
     tinymce.init({
         selector: '.edit_episode_page #content',
         setup : function(ed)
@@ -101,5 +114,29 @@ $(document).ready(function() {
         var route = button.data('reject_route');
         var modal = $(this);
         modal.find('form.reject_quest').attr('action', route);
+    });
+});
+
+$(document).ready(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('.like_quest').on('click', function(){
+        var button = $(this);
+        $.post($(this).data('route'), {}, function(rating){
+            button.parents('.quest_row').find('.rating_counter').html(rating);
+        });
+        $(this).prop('disabled', true);
+        $(this).parent().find('.dislike_quest').prop('disabled', false);
+    });
+    $('.dislike_quest').on('click', function(){
+        var button = $(this);
+        $.post($(this).data('route'), {}, function(rating){
+            button.parents('.quest_row').find('.rating_counter').html(rating);
+        });
+        $(this).prop('disabled', true);
+        $(this).parent().find('.like_quest').prop('disabled', false);
     });
 });
