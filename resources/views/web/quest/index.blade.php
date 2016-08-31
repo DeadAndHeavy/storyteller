@@ -34,4 +34,7 @@
         </div>
     </div>
 </div>
+@if (Auth::check() && Auth::user()->isAdmin())
+    @include('web/modal/reject_quest')
+@endif
 @endsection

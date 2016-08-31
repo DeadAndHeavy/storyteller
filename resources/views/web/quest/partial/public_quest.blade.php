@@ -19,6 +19,11 @@
             <a href="{{ route('play_quest', ['questId' => $quest->id]) }}" class="btn btn-info" title="Play quest">
                 <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
             </a>
+            @if (Auth::check() && Auth::user()->isAdmin())
+                <button type="button" class="btn btn-warning" data-reject_route="{{ route('reject_quest', ['questId' => $quest->id]) }}" data-toggle="modal" data-target="#rejectQuestModal">
+                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                </button>
+            @endif
         </td>
     @endif
 </tr>
