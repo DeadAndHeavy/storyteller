@@ -12,16 +12,20 @@ class VoteService
 
     public function store($questId, $userId, $type)
     {
-        $alreadyVoted = Vote::where('quest_id', $questId)->where('user_id', $userId)->first();
-        if ($alreadyVoted) {
-            $alreadyVoted->delete();
-        }
         $voteData = [
             'quest_id' => $questId,
             'user_id' => $userId,
             'type' => $type
         ];
-        Vote::create($voteData);
+        $alreadyVoted = Vote::where('quest_id', $questId)->where('user_id', $userId)->first();
+        if ($alreadyVoted && $alreadyVoted->type == $type) {
+            $alreadyVoted->delete();
+        } elseif ($alreadyVoted && $alreadyVoted->type != $type) {
+            $alreadyVoted->delete();
+            Vote::create($voteData);
+        } else {
+            Vote::create($voteData);
+        }
     }
 
     public static function alreadyVoted($questId)

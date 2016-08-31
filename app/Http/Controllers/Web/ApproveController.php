@@ -32,6 +32,11 @@ class ApproveController extends Controller
 
     public function submitForApproving($questId)
     {
+        if (!$this->scenarioService->isValidQuest($questId)) {
+            flash('Can\'t submit for approving! Quest is not over', 'danger');
+            return back();
+        }
+
         $this->questApproveService->sendForApprove($questId);
 
         return back();

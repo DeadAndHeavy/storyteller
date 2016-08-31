@@ -149,3 +149,7 @@ a {
     background-size: 100%; /* Современные браузеры */
     font-family: Segoe;
 }
+
+.opacity-05 {
+    opacity:0.5;
+}

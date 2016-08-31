@@ -14,9 +14,11 @@ class CreateQuestApproveQueueTable extends Migration
     {
         Schema::create('quest_approve_queue', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('quest_id');
+            $table->integer('quest_id')->unsigned();
+            $table->foreign('quest_id')->references('id')->on('quests')->onDelete('cascade');
             $table->integer('approve_status');
             $table->string('message');
+            $table->index('quest_id');
             $table->timestamps();
         });
     }

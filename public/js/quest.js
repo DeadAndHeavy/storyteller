@@ -128,15 +128,37 @@ $(document).ready(function() {
         $.post($(this).data('route'), {}, function(rating){
             button.parents('.quest_row').find('.rating_counter').html(rating);
         });
-        $(this).prop('disabled', true);
-        $(this).parent().find('.dislike_quest').prop('disabled', false);
+        var like_quest_button = $(this).parent().find('.like_quest');
+        var dislike_quest_button = $(this).parent().find('.dislike_quest');
+        if (like_quest_button.find('span').hasClass('glyphicon-thumbs-up')) {
+            like_quest_button.find('span').removeClass('glyphicon-thumbs-up').addClass('glyphicon-ok');
+            if (dislike_quest_button.find('span').hasClass('glyphicon-ok')) {
+                dislike_quest_button.find('span').removeClass('glyphicon-ok').addClass('glyphicon-thumbs-down');
+                dislike_quest_button.css('opacity', '1');
+            }
+            like_quest_button.css('opacity', '0.5');
+        } else {
+            like_quest_button.find('span').removeClass('glyphicon-ok').addClass('glyphicon-thumbs-up');
+            like_quest_button.css('opacity', '1');
+        }
     });
     $('.dislike_quest').on('click', function(){
         var button = $(this);
         $.post($(this).data('route'), {}, function(rating){
             button.parents('.quest_row').find('.rating_counter').html(rating);
         });
-        $(this).prop('disabled', true);
-        $(this).parent().find('.like_quest').prop('disabled', false);
+        var like_quest_button = $(this).parent().find('.like_quest');
+        var dislike_quest_button = $(this).parent().find('.dislike_quest');
+        if (dislike_quest_button.find('span').hasClass('glyphicon-thumbs-down')) {
+            dislike_quest_button.find('span').removeClass('glyphicon-thumbs-down').addClass('glyphicon-ok');
+            if (like_quest_button.find('span').hasClass('glyphicon-ok')) {
+                like_quest_button.find('span').removeClass('glyphicon-ok').addClass('glyphicon-thumbs-up');
+                like_quest_button.css('opacity', '1');
+            }
+            $(this).parent().find('.dislike_quest').css('opacity', '0.5');
+        } else {
+            dislike_quest_button.find('span').removeClass('glyphicon-ok').addClass('glyphicon-thumbs-down');
+            dislike_quest_button.css('opacity', '1');
+        }
     });
 });
