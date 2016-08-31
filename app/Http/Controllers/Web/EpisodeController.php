@@ -88,7 +88,7 @@ class EpisodeController extends Controller
 
     public function update(EpisodeRequest $request)
     {
-        if (!$this->questService->isOwnQuest($request->episodeId)) {
+        if (!$this->questService->isOwnQuest($request->questId)) {
             throw new BadRequestHttpException();
         }
 
