@@ -23,6 +23,7 @@ Route::group(['namespace' => 'Web'], function() {
         Route::post('/quest/{questId}/submit_for_approving', 'ApproveController@submitForApproving')->name('submit_for_approving');
         Route::post('/quest/{questId}/like','QuestController@like')->name('like_quest');
         Route::post('/quest/{questId}/dislike','QuestController@dislike')->name('dislike_quest');
+        Route::post('/quest/{questId}/comment','QuestController@addComment')->name('comment_quest');
 
         Route::get('/quest/{questId}/episode', 'EpisodeController@index')->name('all_episodes');
         Route::get('/quest/{questId}/episode/create', 'EpisodeController@create')->name('create_episode');

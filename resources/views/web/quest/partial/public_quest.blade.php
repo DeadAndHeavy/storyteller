@@ -8,6 +8,9 @@
     <td class="text-center vertical-align">
         <h4><span class="rating_counter">{{ $quest->votes->pluck('type')->sum() }}</span></h4>
     </td>
+    <td class="text-center vertical-align">
+        <h4><span class="comments_counter">{{ $quest->comments->count() }}</span></h4>
+    </td>
     @if (Auth::check())
         <td class="text-center vertical-align">
             <button type="button" class="btn btn-success like_quest {{ (\App\Core\Service\VoteService::alreadyVoted($quest->id) && \App\Core\Service\VoteService::alreadyVoted($quest->id)->type == \App\Core\Service\VoteService::VOTE_TYPE_LIKE) ? 'opacity-05' : '' }}" data-route="{{ route('like_quest', ['questId' => $quest->id]) }}" title="Like quest">

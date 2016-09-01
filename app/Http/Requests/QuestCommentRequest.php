@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class VoteRequest extends Request
+class QuestCommentRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class VoteRequest extends Request
         return [
             'quest_id' => 'required|integer',
             'user_id' => 'required|integer',
-            'type' => 'required',
+            'comment' => 'required|max:2000',
         ];
     }
 }

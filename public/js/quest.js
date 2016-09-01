@@ -70,7 +70,7 @@ $(document).ready(function() {
     $('#public_quests_table').DataTable({
         "columnDefs": [
             {
-                "targets": [ 5 ],
+                "targets": [ 6 ],
                 "sortable": false,
                 "searchable": false
             }

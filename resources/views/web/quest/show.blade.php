@@ -84,6 +84,52 @@
                             </a>
                         @endif
                     </div>
+                    <hr>
+                    <div>
+                        <div class="col-md-12" id="quest_comments_container">
+                            @foreach($quest->comments as $comment)
+                                <div class="col-md-12 comment">
+                                    <div class="col-md-2 author">
+                                        <div class="name"><b>{{ $comment->user->name }}</b></div>
+                                        <div class="time">{{ $comment->created_at }}</div>
+                                    </div>
+                                    <div class="col-md-10 well well-lg">
+                                        {{ $comment->comment }}
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        @if (Auth::check())
+                            <div class="col-md-12" id="quest_comments_form">
+                                <form class="form-horizontal" role="form" method="POST" action="{{ route('comment_quest', ['questId' => $quest->id]) }}">
+                                    {{ csrf_field() }}
+                                    <input id="user_id" type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                    <input id="quest_id" type="hidden" name="quest_id" value="{{ $quest->id }}">
+
+                                    <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}">
+                                        <label for="comment" class="col-md-2 control-label">Quest comment</label>
+
+                                        <div class="col-md-8">
+                                            <textarea id="comment" class="form-control" noresize maxlength="2000" rows="8" spellcheck="false" name="comment">{{ old('comment') }}</textarea>
+
+                                            @if ($errors->has('comment'))
+                                                <span class="help-block">
+                                                <strong>{{ $errors->first('comment') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-8 col-md-offset-2">
+                                            <button type="submit" class="btn btn-primary">
+                                                <span class="glyphicon glyphicon-send" aria-hidden="true"></span> Add comment
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

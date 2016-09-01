@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateScenarioStepsTable extends Migration
+class CreateQuestCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,15 @@ class CreateScenarioStepsTable extends Migration
      */
     public function up()
     {
-        Schema::create('scenario_steps', function (Blueprint $table) {
+        Schema::create('quest_comments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('quest_id')->unsigned();
             $table->foreign('quest_id')->references('id')->on('quests')->onDelete('cascade');
             $table->index('quest_id');
-            $table->integer('episode_id')->unsigned();
-            $table->foreign('episode_id')->references('id')->on('episodes')->onDelete('cascade');
-            $table->index('episode_id');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->index('user_id');
+            $table->text('comment');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateScenarioStepsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('scenario_steps');
+        Schema::drop('quest_comments');
     }
 }

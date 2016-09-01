@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Core\Service\ScenarioService;
+use App\Core\Service\QuestCommentService;
 use App\Core\Service\VoteService;
 use App\Http\Controllers\Controller;
 use App\Core\Service\QuestService;
+use App\Http\Requests\QuestCommentRequest;
 use App\Http\Requests\QuestRequest;
 use App\Quest;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class QuestController extends Controller
 {
@@ -18,11 +20,16 @@ class QuestController extends Controller
      * @var VoteService
      */
     private $voteService;
+    /**
+     * @var QuestCommentService
+     */
+    private $questCommentService;
 
-    public function __construct(QuestService $questService, VoteService $voteService)
+    public function __construct(QuestService $questService, VoteService $voteService, QuestCommentService $questCommentService)
     {
         $this->questService = $questService;
         $this->voteService = $voteService;
+        $this->questCommentService = $questCommentService;
     }
 
     public function index()
@@ -37,6 +44,10 @@ class QuestController extends Controller
     public function show($questId)
     {
         $quest = Quest::find($questId);
+
+        if (!$quest) {
+            throw new NotFoundHttpException();
+        }
 
         return view('web/quest/show', [
             'quest' => $quest,
@@ -112,5 +123,12 @@ class QuestController extends Controller
         $this->voteService->store($questId, Auth::user()->id, VoteService::VOTE_TYPE_DISLIKE);
 
         return Quest::find($questId)->votes->pluck('type')->sum();
+    }
+
+    public function addComment(QuestCommentRequest $request)
+    {
+        $this->questCommentService->store($request->all());
+
+        return redirect(route('quest_page' , ['questId' => $request->questId]));
     }
 }

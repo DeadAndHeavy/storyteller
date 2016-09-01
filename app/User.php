@@ -38,4 +38,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Vote');
     }
+
+    public function questComments()
+    {
+        return $this->hasMany('App\QuestComment');
+    }
 }

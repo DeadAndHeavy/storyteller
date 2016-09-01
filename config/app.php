@@ -164,6 +164,7 @@ return [
         App\Providers\EpisodeServiceProvider::class,
         App\Providers\QuestApproveProvider::class,
         App\Providers\VoteProvider::class,
+        App\Providers\QuestCommentProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
 

@@ -12,13 +12,14 @@
                         <table id="public_quests_table" class="table table-bordered">
                             <thead>
                                 <tr class="active">
-                                    <th class="text-center">Title</th>
-                                    <th class="text-center">Description</th>
-                                    <th class="text-center">Genre</th>
-                                    <th class="text-center">Author</th>
-                                    <th class="text-center">Rating</th>
+                                    <th class="col-md-2 text-center">Title</th>
+                                    <th class="col-md-3 text-center">Description</th>
+                                    <th class="col-md-1 text-center">Genre</th>
+                                    <th class="col-md-1 text-center">Author</th>
+                                    <th class="col-md-1 text-center">Rating</th>
+                                    <th class="col-md-1 text-center">Comments</th>
                                     @if (Auth::check())
-                                        <th class="text-center">Actions</th>
+                                        <th class="col-md-3 text-center">Actions</th>
                                     @endif
                                 </tr>
                             </thead>
