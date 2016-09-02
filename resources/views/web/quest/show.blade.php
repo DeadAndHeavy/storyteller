@@ -87,21 +87,11 @@
                     <hr>
                     <div>
                         <div class="col-md-12" id="quest_comments_container">
-                            @foreach($quest->comments as $comment)
-                                <div class="col-md-12 comment">
-                                    <div class="col-md-2 author">
-                                        <div class="name"><b>{{ $comment->user->name }}</b></div>
-                                        <div class="time">{{ $comment->created_at }}</div>
-                                    </div>
-                                    <div class="col-md-10 well well-lg">
-                                        {{ $comment->comment }}
-                                    </div>
-                                </div>
-                            @endforeach
+                            @each('web.quest.partial.quest_comment', $quest->comments, 'comment')
                         </div>
                         @if (Auth::check())
-                            <div class="col-md-12" id="quest_comments_form">
-                                <form class="form-horizontal" role="form" method="POST" action="{{ route('comment_quest', ['questId' => $quest->id]) }}">
+                            <div class="col-md-12">
+                                <form id="quest_comments_form" class="form-horizontal" role="form" method="POST" action="{{ route('comment_quest', ['questId' => $quest->id]) }}">
                                     {{ csrf_field() }}
                                     <input id="user_id" type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                                     <input id="quest_id" type="hidden" name="quest_id" value="{{ $quest->id }}">

@@ -8,7 +8,7 @@ class QuestCommentService
 {
     public function store($questCommentData)
     {
-        QuestComment::create($questCommentData);
+        return QuestComment::create($questCommentData);
     }
 
     public function update($id, $comment)

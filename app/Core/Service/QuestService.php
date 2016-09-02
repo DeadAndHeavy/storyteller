@@ -3,6 +3,7 @@
 namespace App\Core\Service;
 
 use App\Episode;
+use App\QuestComment;
 use Auth;
 use App\Quest;
 
@@ -24,6 +25,11 @@ class QuestService
     public function isOwnQuest($questId)
     {
         return Quest::find($questId)->user_id == Auth::user()->id;
+    }
+
+    public function isOwnQuestComment($commentId)
+    {
+        return QuestComment::find($commentId)->user_id == Auth::user()->id;
     }
 
     public function getAll() {

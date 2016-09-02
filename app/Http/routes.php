@@ -24,6 +24,10 @@ Route::group(['namespace' => 'Web'], function() {
         Route::post('/quest/{questId}/like','QuestController@like')->name('like_quest');
         Route::post('/quest/{questId}/dislike','QuestController@dislike')->name('dislike_quest');
         Route::post('/quest/{questId}/comment','QuestController@addComment')->name('comment_quest');
+        Route::patch('/quest/{questId}/comment/{commentId}','QuestController@updateComment')->name('update_quest_comment');
+        Route::delete('/quest/{questId/comment/{commentId}', 'QuestController@deleteComment')->name('delete_quest_comment');
+        Route::get('/quest/comment/renderQuestCommentForm', 'QuestController@renderQuestCommentForm');
+        Route::get('/quest/comment/renderQuestComment', 'QuestController@renderQuestComment');
 
         Route::get('/quest/{questId}/episode', 'EpisodeController@index')->name('all_episodes');
         Route::get('/quest/{questId}/episode/create', 'EpisodeController@create')->name('create_episode');

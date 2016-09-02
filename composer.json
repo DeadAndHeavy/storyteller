@@ -10,7 +10,8 @@
         "barryvdh/laravel-ide-helper": "^2.2",
         "twbs/bootstrap": "^3.3",
         "mews/purifier": "^2.0",
-        "laracasts/flash": "^2.0"
+        "laracasts/flash": "^2.0",
+        "hoa/websocket": "~3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

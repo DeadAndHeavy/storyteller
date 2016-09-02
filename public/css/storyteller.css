@@ -114,23 +114,12 @@ select:-moz-focusring {
     width: 210px;
 }
 
-hr {
-    -moz-border-bottom-colors: none;
-    -moz-border-image: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    border-color: #EEEEEE -moz-use-text-color #FFFFFF;
-    border-style: solid none;
-    border-width: 1px 0;
-    margin: 18px 0;
-}
-
 body {
     background: url('../img/paper-back.png');
 }
 
 .top-buffer { margin-top:20px; }
+.top-buffer-5 { margin-top:5px; }
 .top-buffer-2 {margin-top:40px;}
 .bottom-buffer {margin-bottom:20px; }
 .bottom-buffer-2 {margin-bottom:40px; }

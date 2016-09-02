@@ -9,6 +9,8 @@ use App\Core\Service\QuestService;
 use App\Http\Requests\QuestCommentRequest;
 use App\Http\Requests\QuestRequest;
 use App\Quest;
+use App\QuestComment;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -127,8 +129,32 @@ class QuestController extends Controller
 
     public function addComment(QuestCommentRequest $request)
     {
-        $this->questCommentService->store($request->all());
+        $questCommentModel = $this->questCommentService->store($request->all());
+        return json_encode(['comment_id' => $questCommentModel->id]);
+    }
+
+    public function updateComment(QuestCommentRequest $request)
+    {
+        if (!$this->questService->isOwnQuestComment($request->commentId)) {
+            throw new BadRequestHttpException();
+        }
+
+        $this->questCommentService->update($request->commentId, $request->input('comment'));
 
         return redirect(route('quest_page' , ['questId' => $request->questId]));
+    }
+
+    public function renderQuestCommentForm(Request $request)
+    {
+        return view('web/quest/partial/quest_comment_form', [
+            'comment' => QuestComment::find($request->input('comment_id'))
+        ])->render();
+    }
+
+    public function renderQuestComment(Request $request)
+    {
+        return view('web/quest/partial/quest_comment', [
+            'comment' => QuestComment::find($request->input('comment_id'))
+        ])->render();
     }
 }
