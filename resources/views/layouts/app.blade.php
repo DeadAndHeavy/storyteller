@@ -99,6 +99,9 @@
     <script src="{{ URL::asset('js/dataTables.bootstrap.min.js') }}"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <script type="text/javascript">
+        host = 'ws://' + '{{ config('websocket.server_ip') }}' + ':' + '{{ config('websocket.server_port') }}';
+    </script>
     <script type="text/javascript" src="{{ URL::asset('js/quest.js') }}"></script>
 </body>
 </html>

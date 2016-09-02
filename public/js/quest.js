@@ -164,7 +164,6 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    var host   = 'ws://192.168.58.63:8889';
     var socket = null;
     socket = new WebSocket(host);
     socket.onmessage = function (msg) {

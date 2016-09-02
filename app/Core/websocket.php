@@ -1,8 +1,15 @@
 <?php
-require __DIR__.'/../bootstrap/autoload.php';
+require __DIR__.'/../../bootstrap/autoload.php';
+$app = require_once __DIR__.'/../../bootstrap/app.php';
+
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+
+$response = $kernel->handle(
+    $request = Illuminate\Http\Request::capture()
+);
 
 $websocket = new Hoa\Websocket\Server(
-    new Hoa\Socket\Server('ws://192.168.58.63:8889')
+    new Hoa\Socket\Server('ws://'. config('websocket.server_ip') . ':' . config('websocket.server_port'))
 );
 $websocket->on('open', function (Hoa\Event\Bucket $bucket) {
     echo 'new connection', "\n";
