@@ -1,6 +1,5 @@
 $(document).ready(function() {
-    var socket = null;
-    socket = new WebSocket(host);
+    var socket = new WebSocket(host);
     socket.onmessage = function (msg) {
         var origin_quest_id = $("#quest_container").data('quest_id');
         var msgDataList = msg.data.split('::');
@@ -17,6 +16,11 @@ $(document).ready(function() {
                 $(".comment_content[data-comment_id='" + msgDataList[1] + "']").parents('.comment').replaceWith(data);
             });
         }
+    };
+
+    window.onbeforeunload = function() {
+        socket.onclose = function () {};
+        socket.close();
     };
 
     var addComment = function(form) {
