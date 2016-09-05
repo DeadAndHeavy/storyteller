@@ -2,11 +2,10 @@
 
 namespace App\Providers;
 
-use App\Core\Service\QuestCommentService;
 use App\Core\Service\WebSocketService;
 use Illuminate\Support\ServiceProvider;
 
-class QuestCommentProvider extends ServiceProvider
+class WebSocketProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -25,8 +24,8 @@ class QuestCommentProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(QuestCommentService::class, function ($app) {
-            return new QuestCommentService(new WebSocketService());
+        $this->app->singleton(WebSocketService::class, function ($app) {
+            return new WebSocketService($app['request']);
         });
     }
 }

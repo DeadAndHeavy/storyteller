@@ -12,7 +12,7 @@ $websocket = new Hoa\Websocket\Server(
     new Hoa\Socket\Server('ws://'. config('websocket.server_ip') . ':' . config('websocket.server_port'))
 );
 $websocket->on('open', function (Hoa\Event\Bucket $bucket) {
-    echo 'new connection', "\n";
+    //echo 'new connection', "\n";
 
     return;
 });
@@ -25,7 +25,7 @@ $websocket->on('message', function (Hoa\Event\Bucket $bucket) {
     return;
 });
 $websocket->on('close', function (Hoa\Event\Bucket $bucket) {
-    echo 'connection closed', "\n";
+    //echo 'connection closed', "\n";
 
     return;
 });

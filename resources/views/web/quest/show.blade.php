@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
+@section('scripts')
+    <script type="text/javascript" src="{{ URL::asset('js/questCommentSocket.js') }}"></script>
+@endsection
+
 @section('content')
-<div class="container">
+<div class="container" id="quest_container" data-quest_id="{{ $quest->id }}">
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">

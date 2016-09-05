@@ -129,8 +129,7 @@ class QuestController extends Controller
 
     public function addComment(QuestCommentRequest $request)
     {
-        $questCommentModel = $this->questCommentService->store($request->all());
-        return json_encode(['comment_id' => $questCommentModel->id]);
+        $this->questCommentService->store($request->all());
     }
 
     public function updateComment(QuestCommentRequest $request)

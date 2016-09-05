@@ -165,6 +165,7 @@ return [
         App\Providers\QuestApproveProvider::class,
         App\Providers\VoteProvider::class,
         App\Providers\QuestCommentProvider::class,
+        App\Providers\WebSocketProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
 

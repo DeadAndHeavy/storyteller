@@ -11,7 +11,10 @@ Route::group(['namespace' => 'Web'], function() {
 
     Route::get('/', 'QuestController@index')->name('public_quests');
     Route::get('/quest', 'QuestController@index');
-    Route::get('/quest/{questId}', 'QuestController@show')->name('quest_page')->where('questId', '[0-9]+');;
+    Route::get('/quest/{questId}', 'QuestController@show')->name('quest_page')->where('questId', '[0-9]+');
+    Route::get('/quest/{questId}/play', 'ScenarioController@play')->name('play_quest');
+    Route::get('/quest/{questId}/playAction', 'ScenarioController@playAction')->name('play_action');
+    Route::get('/scenario/renderNewEpisodeStep', 'ScenarioController@renderNewScenarioStep');
 
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/quest/own', 'QuestController@ownQuests')->name('own_quests');
@@ -41,9 +44,6 @@ Route::group(['namespace' => 'Web'], function() {
         Route::post('/quest/{questId}/scenario/save', 'ScenarioController@save')->name('save_scenario');
         Route::get('/scenario/renderNewStep', 'ScenarioController@renderNewStep');
         Route::post('/quest/{questId}/scenario', 'ScenarioController@save')->name('save_scenario');
-        Route::get('/quest/{questId}/play', 'ScenarioController@play')->name('play_quest');
-        Route::get('/quest/{questId}/playAction', 'ScenarioController@playAction')->name('play_action');
-        Route::get('/scenario/renderNewEpisodeStep', 'ScenarioController@renderNewScenarioStep');
 
         Route::group(['middleware' => 'admin'], function () {
             Route::get('/quest_approving', 'ApproveController@index')->name('quests_for_approving');

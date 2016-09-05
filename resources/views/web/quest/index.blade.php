@@ -18,9 +18,7 @@
                                     <th class="col-md-1 text-center">Author</th>
                                     <th class="col-md-1 text-center">Rating</th>
                                     <th class="col-md-1 text-center">Comments</th>
-                                    @if (Auth::check())
-                                        <th class="col-md-3 text-center">Actions</th>
-                                    @endif
+                                    <th class="col-md-3 text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>

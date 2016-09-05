@@ -4,7 +4,7 @@
         <div class="time">{{ $comment->created_at }}</div>
     </div>
     <div class="col-md-10 well well-lg comment_area">
-        <div class="col-md-11 comment_content">{{ $comment->comment }}</div>
+        <div class="col-md-11 comment_content" data-comment_id="{{ $comment->id }}">{{ $comment->comment }}</div>
         @if ($comment->user_id == Auth::user()->id)
             <div class="col-md-1">
                 <button type="button" data-comment_id="{{ $comment->id }}" class="btn btn-sm btn-primary update_quest_comment" title="Update comment">

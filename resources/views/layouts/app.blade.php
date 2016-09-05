@@ -103,5 +103,7 @@
         host = 'ws://' + '{{ config('websocket.server_ip') }}' + ':' + '{{ config('websocket.server_port') }}';
     </script>
     <script type="text/javascript" src="{{ URL::asset('js/quest.js') }}"></script>
+
+    @yield('scripts')
 </body>
 </html>
