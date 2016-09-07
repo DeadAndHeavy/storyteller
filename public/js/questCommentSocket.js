@@ -3,18 +3,26 @@ $(document).ready(function() {
     socket.onmessage = function (msg) {
         var origin_quest_id = $("#quest_container").data('quest_id');
         var msgDataList = msg.data.split('::');
-        if (msgDataList[0] = 'quest_comment_store' && origin_quest_id == msgDataList[1]) {
-            $.get("/quest/comment/renderQuestComment", {comment_id: msgDataList[2]}, function (data)
-            {
-                $("#quest_comments_container").append(data);
-            });
-
-        }
-        if (msgDataList[0] = 'quest_comment_update' && $(".comment_content[data-comment_id='" + msgDataList[1] + "']").length > 0) {
-            $.get("/quest/comment/renderQuestComment", {comment_id: msgDataList[1]}, function (data)
-            {
-                $(".comment_content[data-comment_id='" + msgDataList[1] + "']").parents('.comment').replaceWith(data);
-            });
+        switch (msgDataList[0]) {
+            case 'quest_comment_store':
+                if (origin_quest_id == msgDataList[1]) {
+                    $.get("/quest/comment/renderQuestComment", {comment_id: msgDataList[2]}, function (data) {
+                        $("#quest_comments_container").append(data);
+                    });
+                }
+                break;
+            case 'quest_comment_update':
+                if ($(".comment_content[data-comment_id='" + msgDataList[1] + "']").length > 0) {
+                    $.get("/quest/comment/renderQuestComment", {comment_id: msgDataList[1]}, function (data) {
+                        $(".comment_content[data-comment_id='" + msgDataList[1] + "']").parents('.comment').replaceWith(data);
+                    });
+                }
+                break;
+            case 'quest_comment_delete':
+                if ($(".comment_content[data-comment_id='" + msgDataList[1] + "']").length > 0) {
+                    $(".comment_content[data-comment_id='" + msgDataList[1] + "']").parents('.comment').remove();
+                }
+                break;
         }
     };
 
@@ -45,6 +53,24 @@ $(document).ready(function() {
         }
     });
 
+    $(document.body).on('submit', '.delete_quest_comment_form' ,function(e) {
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+        });
+        e.preventDefault();
+    });
+
+    $(document.body).on('submit', '.update_quest_comment_form' ,function(e) {
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('action'),
+            data: $(this).serialize()
+        });
+        e.preventDefault();
+    });
+
     $("#quest_comments_form").submit(function(e) {
         addComment($(this));
         e.preventDefault();
@@ -62,10 +88,6 @@ $(document).ready(function() {
             $.get("/quest/comment/renderQuestCommentForm", {comment_id: comment_id}, function (data)
             {
                 comment_area.find('.comment_content').html(data);
-                try {
-                    socket.send(comment_id);
-                } catch (e) {
-                }
             });
             button.data('origin_text', comment_area.find('.comment_content').text());
             button.removeClass('btn-primary').addClass('btn-info');

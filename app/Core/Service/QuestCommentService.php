@@ -37,5 +37,8 @@ class QuestCommentService
     public function destroy($id)
     {
         QuestComment::destroy($id);
+
+        $this->webSocketService->connect();
+        $this->webSocketService->send('quest_comment_delete::' . $id);
     }
 }

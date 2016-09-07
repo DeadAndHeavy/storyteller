@@ -15,6 +15,7 @@ Route::group(['namespace' => 'Web'], function() {
     Route::get('/quest/{questId}/play', 'ScenarioController@play')->name('play_quest');
     Route::get('/quest/{questId}/playAction', 'ScenarioController@playAction')->name('play_action');
     Route::get('/scenario/renderNewEpisodeStep', 'ScenarioController@renderNewScenarioStep');
+    Route::get('/quest/comment/renderQuestComment', 'QuestController@renderQuestComment');
 
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/quest/own', 'QuestController@ownQuests')->name('own_quests');
@@ -28,9 +29,8 @@ Route::group(['namespace' => 'Web'], function() {
         Route::post('/quest/{questId}/dislike','QuestController@dislike')->name('dislike_quest');
         Route::post('/quest/{questId}/comment','QuestController@addComment')->name('comment_quest');
         Route::patch('/quest/{questId}/comment/{commentId}','QuestController@updateComment')->name('update_quest_comment');
-        Route::delete('/quest/{questId/comment/{commentId}', 'QuestController@deleteComment')->name('delete_quest_comment');
+        Route::delete('/quest/{questId}/comment/{commentId}', 'QuestController@deleteComment')->name('delete_quest_comment');
         Route::get('/quest/comment/renderQuestCommentForm', 'QuestController@renderQuestCommentForm');
-        Route::get('/quest/comment/renderQuestComment', 'QuestController@renderQuestComment');
 
         Route::get('/quest/{questId}/episode', 'EpisodeController@index')->name('all_episodes');
         Route::get('/quest/{questId}/episode/create', 'EpisodeController@create')->name('create_episode');

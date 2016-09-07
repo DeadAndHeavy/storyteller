@@ -20,7 +20,6 @@ $websocket->on('message', function (Hoa\Event\Bucket $bucket) {
     $data = $bucket->getData();
     echo '> message ', $data['message'], "\n";
     $bucket->getSource()->broadcast($data['message']);
-    echo '< echo', "\n";
 
     return;
 });

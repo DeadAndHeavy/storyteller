@@ -139,8 +139,15 @@ class QuestController extends Controller
         }
 
         $this->questCommentService->update($request->commentId, $request->input('comment'));
+    }
 
-        return redirect(route('quest_page' , ['questId' => $request->questId]));
+    public function deleteComment(Request $request)
+    {
+        if (!$this->questService->isOwnQuestComment($request->commentId)) {
+            throw new BadRequestHttpException();
+        }
+
+        $this->questCommentService->destroy($request->commentId);
     }
 
     public function renderQuestCommentForm(Request $request)
