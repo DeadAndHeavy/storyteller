@@ -142,3 +142,15 @@ a {
 .opacity-05 {
     opacity:0.5;
 }
+
+.has-error label.has-error {
+    color: #a94442;
+    margin-top: 5px;
+}
+
+.comment_area .update_quest_comment_form {
+    display: none;
+}
+.comment_area .comment-content {
+    display: block;
+}

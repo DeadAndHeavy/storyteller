@@ -12,15 +12,15 @@ $(document).ready(function() {
                 }
                 break;
             case 'quest_comment_update':
-                if ($(".comment_content[data-comment_id='" + msgDataList[1] + "']").length > 0) {
+                if ($(".comment_area[data-comment_id='" + msgDataList[1] + "']").length > 0) {
                     $.get("/quest/comment/renderQuestComment", {comment_id: msgDataList[1]}, function (data) {
-                        $(".comment_content[data-comment_id='" + msgDataList[1] + "']").parents('.comment').replaceWith(data);
+                        $(".comment_area[data-comment_id='" + msgDataList[1] + "']").parents('.comment').replaceWith(data);
                     });
                 }
                 break;
             case 'quest_comment_delete':
-                if ($(".comment_content[data-comment_id='" + msgDataList[1] + "']").length > 0) {
-                    $(".comment_content[data-comment_id='" + msgDataList[1] + "']").parents('.comment').remove();
+                if ($(".comment_area[data-comment_id='" + msgDataList[1] + "']").length > 0) {
+                    $(".comment_area[data-comment_id='" + msgDataList[1] + "']").parents('.comment').remove();
                 }
                 break;
         }
@@ -47,22 +47,32 @@ $(document).ready(function() {
         });
     };
 
-    $("#quest_comments_form textarea").keypress(function(e) {
+    /*$("#quest_comments_form textarea").keypress(function(e) {
         if(e.which == 13) {
             addComment($("#quest_comments_form"));
+        }
+    });*/
+
+    $("#quest_comments_form").on('submit' ,function(e) {
+        e.preventDefault();
+    }).validate({
+        errorClass: "has-error",
+        rules: {
+            comment: "required"
+        },
+        submitHandler: function(form) {
+            addComment($(form));
+            return false;
+        },
+        highlight: function(element, errorClass) {
+            $(element).parents('.form-group').addClass(errorClass);
+        },
+        unhighlight: function(element, errorClass) {
+            $(element).parents('.form-group').removeClass(errorClass);
         }
     });
 
     $(document.body).on('submit', '.delete_quest_comment_form' ,function(e) {
-        $.ajax({
-            type: "POST",
-            url: $(this).attr('action'),
-            data: $(this).serialize(),
-        });
-        e.preventDefault();
-    });
-
-    $(document.body).on('submit', '.update_quest_comment_form' ,function(e) {
         $.ajax({
             type: "POST",
             url: $(this).attr('action'),
@@ -71,25 +81,43 @@ $(document).ready(function() {
         e.preventDefault();
     });
 
-    $("#quest_comments_form").submit(function(e) {
-        addComment($(this));
-        e.preventDefault();
-    });
-
     $(document.body).on('click', '.update_quest_comment' ,function(){
         var button = $(this);
         var comment_area = button.parents('.comment_area');
-        var comment_id = button.data('comment_id');
+        var comment_form = comment_area.find('.update_quest_comment_form');
+        var comment_content = comment_area.find('.comment_content');
+        var comment_id = comment_area.data('comment_id');
 
-        if (comment_area.has('.update_quest_comment_form').length) {
-            comment_area.find('.comment_content').html(button.data('origin_text'));
-            button.removeData('origin_text').removeClass('btn-info').addClass('btn-primary');
+        if (comment_form.is(":visible")) {
+            comment_form.hide();
+            comment_content.show();
+            button.removeClass('btn-info').addClass('btn-primary');
         } else {
-            $.get("/quest/comment/renderQuestCommentForm", {comment_id: comment_id}, function (data)
-            {
-                comment_area.find('.comment_content').html(data);
+            comment_form.show();
+            comment_content.hide();
+
+            $("#update_quest_comment_form_" + comment_id).on('submit' ,function(e) {
+                e.preventDefault();
+            }).validate({
+                errorClass: "has-error",
+                rules: {
+                    comment: "required"
+                },
+                submitHandler: function(form) {
+                    $.ajax({
+                        type: "POST",
+                        url: $(form).attr('action'),
+                        data: $(form).serialize()
+                    });
+                    return false;
+                },
+                highlight: function(element, errorClass) {
+                    $(element).parents('.form-group').addClass(errorClass);
+                },
+                unhighlight: function(element, errorClass) {
+                    $(element).parents('.form-group').removeClass(errorClass);
+                }
             });
-            button.data('origin_text', comment_area.find('.comment_content').text());
             button.removeClass('btn-primary').addClass('btn-info');
         }
     });

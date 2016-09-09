@@ -95,6 +95,7 @@
     <!-- JavaScripts -->
     <script src="{{ URL::asset('js/jquery-3.1.0.min.js') }}"></script>
     <script src="{{ URL::asset('bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ URL::asset('bootstrap/dist/js/jquery.validate.min.js') }}"></script>
     <script src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ URL::asset('js/dataTables.bootstrap.min.js') }}"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
