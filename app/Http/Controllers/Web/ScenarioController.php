@@ -67,9 +67,18 @@ class ScenarioController extends Controller
             flash('This quest is not over', 'danger');
             return back();
         }
+        $this->scenarioService->initiateGame($questId);
+
         return view('web/scenario/play', [
             'quest' => Quest::find($questId),
             'startEpisode' => EpisodeService::getStartEpisode($questId)
         ]);
+    }
+
+    public function finish($questId)
+    {
+        $this->scenarioService->finishGame($questId);
+
+        return redirect(route('public_quests'));
     }
 }

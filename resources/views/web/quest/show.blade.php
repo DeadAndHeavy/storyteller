@@ -80,10 +80,10 @@
                                     </form>
                                 @endif
                             @endif
-                            <a href="{{ route('play_quest', ['questId' => $quest->id]) }}" class="btn btn-info" title="Play quest">
-                                <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
-                            </a>
                         @endif
+                        <a href="{{ route('play_quest', ['questId' => $quest->id]) }}" class="btn btn-info" title="Play quest">
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                        </a>
                     </div>
                     <hr>
                     <div>

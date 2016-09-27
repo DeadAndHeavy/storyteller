@@ -32,4 +32,9 @@ class Quest extends Model
     {
         return $this->hasMany('App\QuestComment');
     }
+
+    public function games()
+    {
+        return $this->hasMany('App\Game');
+    }
 }

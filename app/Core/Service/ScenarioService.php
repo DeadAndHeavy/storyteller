@@ -2,7 +2,9 @@
 
 namespace App\Core\Service;
 
+use App\Game;
 use App\Quest;
+use Auth;
 
 class ScenarioService
 {
@@ -47,5 +49,31 @@ class ScenarioService
         }
 
         return $valid;
+    }
+
+    public function initiateGame($questId)
+    {
+        if (Auth::check()) {
+            $alreadyStarted = Game::where('quest_id', $questId)
+                ->where('user_id', Auth::user()->id)
+                ->count();
+
+            if (!$alreadyStarted) {
+                Game::create([
+                    'quest_id' => $questId,
+                    'user_id' => Auth::user()->id,
+                    'finished' => false,
+                ]);
+            }
+        }
+    }
+
+    public function finishGame($questId)
+    {
+        if (Auth::check()) {
+            Game::where('quest_id', $questId)
+                ->where('user_id', Auth::user()->id)
+                ->delete();
+        }
     }
 }

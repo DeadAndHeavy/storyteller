@@ -13,7 +13,7 @@ Route::group(['namespace' => 'Web'], function() {
     Route::get('/quest', 'QuestController@index');
     Route::get('/quest/{questId}', 'QuestController@show')->name('quest_page')->where('questId', '[0-9]+');
     Route::get('/quest/{questId}/play', 'ScenarioController@play')->name('play_quest');
-    Route::get('/quest/{questId}/playAction', 'ScenarioController@playAction')->name('play_action');
+    Route::get('/quest/{questId}/finish', 'ScenarioController@finish')->name('finish_quest');
     Route::get('/scenario/renderNewEpisodeStep', 'ScenarioController@renderNewScenarioStep');
     Route::get('/quest/comment/renderQuestComment', 'QuestController@renderQuestComment');
 
