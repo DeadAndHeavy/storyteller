@@ -18,7 +18,7 @@ $websocket->on('open', function (Hoa\Event\Bucket $bucket) {
 });
 $websocket->on('message', function (Hoa\Event\Bucket $bucket) {
     $data = $bucket->getData();
-    echo '> message ', $data['message'], "\n";
+    echo date("Y-m-d H:i:s") . "\t", $data['message'], "\n";
     $bucket->getSource()->broadcast($data['message']);
 
     return;

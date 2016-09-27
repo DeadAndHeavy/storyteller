@@ -14,6 +14,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         // Commands\Inspire::class,
+        Commands\WebsocketUp::class,
+        Commands\WebsocketDown::class,
+        Commands\WebsocketStatus::class,
     ];
 
     /**
