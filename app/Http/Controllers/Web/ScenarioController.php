@@ -57,7 +57,8 @@ class ScenarioController extends Controller
     {
         $targetEpisode = Episode::find($request->get('targetEpisodeId'));
         return view('web/scenario/partial/scenario_step', [
-            'episode' => $targetEpisode
+            'episode' => $targetEpisode,
+            'imageModificationTime' => filemtime($this->episodeService->getEpisodeImagePath($targetEpisode->quest_id, $targetEpisode->id)),
         ])->render();
     }
 
@@ -69,9 +70,12 @@ class ScenarioController extends Controller
         }
         $this->scenarioService->initiateGame($questId);
 
+        $startEpisode = EpisodeService::getStartEpisode($questId);
+
         return view('web/scenario/play', [
             'quest' => Quest::find($questId),
-            'startEpisode' => EpisodeService::getStartEpisode($questId)
+            'imageModificationTime' => filemtime($this->episodeService->getEpisodeImagePath($questId, $startEpisode->id)),
+            'startEpisode' => $startEpisode
         ]);
     }
 

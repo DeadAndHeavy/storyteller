@@ -101,6 +101,9 @@ $(document).ready(function() {
 
 $(document).on('click', '.episodeActionProcess', function ()
 {
+    if ($(this).hasClass('finish_action')) {
+        return;
+    }
     var quest_episode_zone = $(this).parents('.quest-episode-zone');
     $.get("/scenario/renderNewEpisodeStep", {targetEpisodeId: $(this).data('target-episode-id')}, function (data)
     {

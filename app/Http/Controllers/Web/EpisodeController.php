@@ -28,7 +28,7 @@ class EpisodeController extends Controller
             throw new BadRequestHttpException();
         }
 
-        $episodes = Episode::where('quest_id', $questId)->with('quest', 'episodeActions')->get();
+        $episodes = $this->episodeService->getQuestEpisodes($questId);
 
         return view('web/episode/index', [
             'questId' => $questId,
@@ -82,6 +82,7 @@ class EpisodeController extends Controller
         return view('web/episode/edit', [
             'questId' => $questId,
             'episode' => Episode::find($episodeId),
+            'imageModificationTime' => filemtime($this->episodeService->getEpisodeImagePath($questId, $episodeId)),
             'types' => $this->episodeService->getAllEpisodeTypes(),
         ]);
     }
@@ -94,7 +95,7 @@ class EpisodeController extends Controller
 
         $this->episodeService->update($request->episodeId, $request->all());
 
-        return redirect(route('all_episodes', ['questId' => $request->questId]));
+        return redirect(route('edit_episode', ['questId' => $request->questId, 'episodeId' => $request->episodeId]));
     }
 
     public function destroy($questId, $episodeId)
@@ -103,7 +104,7 @@ class EpisodeController extends Controller
             throw new BadRequestHttpException();
         }
 
-        $this->episodeService->destroy($episodeId);
+        $this->episodeService->destroy($questId, $episodeId);
 
         return redirect(route('all_episodes', ['questId' => $questId]));
     }

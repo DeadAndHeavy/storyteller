@@ -6,7 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Create Episode</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('store_episode', ['questId' => $quest->id ]) }}">
+                    <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ route('store_episode', ['questId' => $quest->id ]) }}">
                         {{ csrf_field() }}
                         <input id="quest_id" type="hidden" name="quest_id" value="{{ $quest->id }}">
 
@@ -41,6 +41,22 @@
                                 @if ($errors->has('type'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('type') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('episode_image') ? ' has-error' : '' }}">
+                            <label for="episode_image" class="col-md-2 control-label">Episode image</label>
+                            <div class="col-md-10">
+                                <label class="btn btn-default" for="episode_image">
+                                    <input id="episode_image" type="file" style="display:none;" name="episode_image" onchange="$('#upload-file-info').html($(this).val());">
+                                    Upload image
+                                </label>
+                                <span class='label label-success' id="upload-file-info"></span>
+                                @if ($errors->has('episode_image'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('episode_image') }}</strong>
                                     </span>
                                 @endif
                             </div>

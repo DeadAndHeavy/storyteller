@@ -52,4 +52,13 @@ $app->singleton(
 |
 */
 
+$app->configureMonologUsing(function($monolog) use ($app) {
+    $monolog->pushHandler(
+        (new Monolog\Handler\RotatingFileHandler(
+            '/var/log/storyteller/story.log',
+            $app->make('config')->get('app.log_max_files', 10)
+        ))->setFormatter(new Monolog\Formatter\LineFormatter(null, null, true, true))
+    );
+});
+
 return $app;

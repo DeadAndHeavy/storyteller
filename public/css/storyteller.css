@@ -154,3 +154,39 @@ a {
 .comment_area .comment-content {
     display: block;
 }
+
+#game-content {
+    height: 500px;
+    max-height: 500px;
+    overflow-y: scroll;
+    background-color: white;
+    padding: 20px;
+    font-family: Segoe;
+}
+#game-image {
+    height: 350px;
+    background-color: white
+}
+#game-states {
+    height: 350px;
+    background-color: white;
+    margin-top: 20px;
+}
+#game-actions {
+    height: 200px;
+    max-height: 200px;
+    background-color: white;
+    overflow-y: scroll;
+    margin-top: 20px;
+    padding: 20px;
+    font-family: Segoe;
+}
+
+.margin-top-small {
+    margin-top: 5px;
+}
+
+.episode_image_edit {
+    width: 30%;
+    height: 30%;
+}

@@ -6,6 +6,7 @@ use App\Episode;
 use App\QuestComment;
 use Auth;
 use App\Quest;
+use Illuminate\Support\Facades\File;
 
 class QuestService
 {
@@ -51,18 +52,29 @@ class QuestService
         Quest::create($questData);
     }
 
-    public function update($id, $questData)
+    public function update($questId, $questData)
     {
-        Quest::find($id)->update($questData);
+        Quest::find($questId)->update($questData);
     }
 
-    public function destroy($id)
+    public function destroy($questId)
     {
-        Quest::destroy($id);
+        if (Quest::destroy($questId)) {
+            $this->deleteQuestImages($questId);
+        }
     }
 
     public function addEpisode($episodeData)
     {
         Episode::create($episodeData);
+    }
+
+    public function deleteQuestImages($questId)
+    {
+        $questImagesPath = public_path('quests_images' . '/' . $questId);
+
+        if (File::exists($questImagesPath)) {
+            File::deleteDirectory($questImagesPath);
+        }
     }
 }

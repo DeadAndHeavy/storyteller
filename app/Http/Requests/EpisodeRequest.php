@@ -36,11 +36,14 @@ class EpisodeRequest extends Request
      */
     public function rules()
     {
+        $imageRules = $this->episode_id ? 'mimes:jpeg,png' : 'required|mimes:jpeg,png';
+
         return [
             'title' => 'required',
             'quest_id' => 'required|integer',
             'content' => 'required|max:' . EpisodeService::EPISODE_MAX_LENGTH,
             'type' => 'required|valid_episode_type|unique_episode_type:' . $this->type . ',' . $this->quest_id . ',' . $this->episode_id,
+            'episode_image' => $imageRules,
             'actions_list.*.content' => 'required'
         ];
     }
