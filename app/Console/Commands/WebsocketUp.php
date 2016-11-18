@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 class WebsocketUp extends Command
@@ -39,14 +38,8 @@ class WebsocketUp extends Command
      */
     public function handle()
     {
-        $process = new Process('nohup php app/Core/websocket.php > storage/logs/websocket.log &');
+        $process = new Process('nohup php app/Core/websocket.php >> storage/logs/websocket-' . date("Y-m-d") . '.log &');
         $process->disableOutput();
         $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-
-        echo $process->getPid();
     }
 }
