@@ -81,7 +81,7 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     tinymce.init({
-        selector: '.edit_episode_page #content',
+        selector: '.edit_episode_page #content, .create_episode_page #content, .create_quest_page #description, .edit_quest_page #description',
         setup : function(ed)
         {
             ed.on('init', function()

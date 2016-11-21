@@ -23,10 +23,13 @@ class QuestRequest extends Request
      */
     public function rules()
     {
+        $imageRules = $this->questId ? 'mimes:jpeg,png' : 'required|mimes:jpeg,png';
+
         return [
             'name' => 'required|min:2|max:50|unique:quests,name,' . $this->questId,
             'description' => 'required|max:3000',
             'genre' => 'required|valid_genre',
+            'quest_image' => $imageRules,
             'user_id' => 'required|integer',
         ];
     }

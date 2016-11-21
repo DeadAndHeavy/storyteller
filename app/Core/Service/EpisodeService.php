@@ -207,14 +207,10 @@ class EpisodeService
      */
     public function deleteEpisodeImage($questId, $episodeId)
     {
-        $questImagesPath = $this->getQuestImagesFolderPath($questId);
         $episodeImagePath = $this->getEpisodeImagePath($questId, $episodeId);
 
         if (File::exists($episodeImagePath)) {
             File::delete($episodeImagePath);
-        }
-        if (count(File::files($questImagesPath)) == 0) {
-            File::deleteDirectory($questImagesPath);
         }
     }
 }

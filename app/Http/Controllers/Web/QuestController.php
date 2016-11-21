@@ -53,6 +53,7 @@ class QuestController extends Controller
 
         return view('web/quest/show', [
             'quest' => $quest,
+            'imageModificationTime' => filemtime($this->questService->getQuestLogoImagePath($questId)),
         ]);
     }
 
@@ -88,6 +89,7 @@ class QuestController extends Controller
         return view('web/quest/edit', [
             'quest' => Quest::find($questId),
             'genres' => $this->questService->getAllQuestGenres(),
+            'imageModificationTime' => filemtime($this->questService->getQuestLogoImagePath($questId)),
         ]);
     }
 

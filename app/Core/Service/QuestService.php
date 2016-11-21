@@ -6,7 +6,8 @@ use App\Episode;
 use App\QuestComment;
 use Auth;
 use App\Quest;
-use Illuminate\Support\Facades\File;
+use File;
+use Image;
 
 class QuestService
 {
@@ -49,12 +50,17 @@ class QuestService
 
     public function store($questData)
     {
-        Quest::create($questData);
+        $questModel = Quest::create($questData);
+        $this->uploadQuestImage($questData['quest_image'], $questModel->id);
     }
 
     public function update($questId, $questData)
     {
         Quest::find($questId)->update($questData);
+
+        if (isset($questData['quest_image']) && $questData['quest_image']) {
+            $this->uploadQuestImage($questData['quest_image'], $questId);
+        }
     }
 
     public function destroy($questId)
@@ -76,5 +82,25 @@ class QuestService
         if (File::exists($questImagesPath)) {
             File::deleteDirectory($questImagesPath);
         }
+    }
+
+    /**
+     * Upload and fit quest image
+     *
+     * @param \Illuminate\Http\UploadedFile $uploadedTmpFile
+     * @param int $questId
+     */
+    public function uploadQuestImage(\Illuminate\Http\UploadedFile $uploadedTmpFile, $questId)
+    {
+        $questImagesDir = public_path('quests_images' . '/' . $questId);
+        if (!File::exists($questImagesDir)) {
+            File::makeDirectory($questImagesDir, 0777, true, true);
+        }
+        Image::make($uploadedTmpFile->getRealPath())->fit(350, 350)->save($questImagesDir . '/quest_logo.jpg');
+    }
+
+    public function getQuestLogoImagePath($questId)
+    {
+        return public_path('quests_images' . '/' . $questId . '/quest_logo.jpg');
     }
 }

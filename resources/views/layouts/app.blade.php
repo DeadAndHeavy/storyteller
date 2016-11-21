@@ -90,6 +90,14 @@
         @endif
     </div>
 
+    <!--<nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+            <div class="navbar-header">
+
+            </div>
+        </div>
+    </nav>-->
+
     @yield('content')
 
     <!-- JavaScripts -->
