@@ -38,24 +38,17 @@
                                 <a href="{{ route('edit_quest', ['questId' => $quest->id]) }}" class="btn btn-primary" title="Update quest info">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
                                 </a>
-                                <a href="{{ route('all_episodes', ['questId' => $quest->id]) }}" class="btn btn-success" title="Manage quest episodes">
+                                <a href="{{ route('all_episodes', ['questId' => $quest->id]) }}" class="btn btn-primary" title="Manage quest episodes">
                                     <span class="glyphicon glyphicon-film" aria-hidden="true"></span> Episodes
                                 </a>
-                                <a href="{{ route('scenario', ['questId' => $quest->id]) }}" class="btn btn-epic" title="Quest scenario">
+                                <a href="{{ route('scenario', ['questId' => $quest->id]) }}" class="btn btn-primary" title="Quest scenario">
                                     <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Scenario
                                 </a>
-                                <form class="delete_quest" style="display:inline" role="form" action="{{ route('delete_quest', ['questId' => $quest->id]) }}" method="POST">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    {{ csrf_field() }}
-                                    <button onclick="return confirm('Are you sure you want to delete this quest?');" type="submit" class="btn btn-danger" title="Delete quest">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
-                                    </button>
-                                </form>
                                 @if ($quest->approval)
                                     @if ($quest->approval->approve_status == \App\Core\Service\QuestApproveService::QUEST_APPROVE_STATUS_REJECTED)
                                         <form class="submit_for_approving" style="display:inline" role="form" action="{{ route('submit_for_approving', ['questId' => $quest->id]) }}" method="POST">
                                             {{ csrf_field() }}
-                                            <button type="submit" class="btn btn-success" title="Submit for approving again">
+                                            <button type="submit" class="btn btn-primary" title="Submit for approving again">
                                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Approve request
                                             </button>
                                         </form>
@@ -63,11 +56,18 @@
                                 @else
                                     <form class="submit_for_approving" style="display:inline" role="form" action="{{ route('submit_for_approving', ['questId' => $quest->id]) }}" method="POST">
                                         {{ csrf_field() }}
-                                        <button type="submit" class="btn btn-success" title="Submit for approving">
+                                        <button type="submit" class="btn btn-primary" title="Submit for approving">
                                             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Approve request
                                         </button>
                                     </form>
                                 @endif
+                                <form class="delete_quest" style="display:inline" role="form" action="{{ route('delete_quest', ['questId' => $quest->id]) }}" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    {{ csrf_field() }}
+                                    <button onclick="return confirm('Are you sure you want to delete this quest?');" type="submit" class="btn btn-danger" title="Delete quest">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete
+                                    </button>
+                                </form>
                             @endif
                         @endif
                     </div>
