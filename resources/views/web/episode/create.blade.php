@@ -96,11 +96,18 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-2">
+                            <div class="col-md-1 col-md-offset-2">
                                 <button id="add_episode_action" data-quest_id="{{ $quest->id }}" class="btn btn-success" type="button">
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                 </button>
                             </div>
+                            @if ($errors->has('actions_list'))
+                                <div class="has-error">
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('actions_list') }}</strong>
+                                    </span>
+                                </div>
+                            @endif
                         </div>
 
                         <div class="form-group">

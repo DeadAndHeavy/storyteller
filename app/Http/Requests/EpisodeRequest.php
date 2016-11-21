@@ -44,7 +44,8 @@ class EpisodeRequest extends Request
             'content' => 'required|max:' . EpisodeService::EPISODE_MAX_LENGTH,
             'type' => 'required|valid_episode_type|unique_episode_type:' . $this->type . ',' . $this->quest_id . ',' . $this->episode_id,
             'episode_image' => $imageRules,
-            'actions_list.*.content' => 'required'
+            'actions_list.*.content' => 'required',
+            'actions_list' => 'actions_limit:10'
         ];
     }
 }

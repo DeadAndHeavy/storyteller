@@ -34,6 +34,14 @@ class EpisodeServiceProvider extends ServiceProvider
             },
             'Episode with this type already exists'
         );
+
+        Validator::extend('actions_limit',
+            function ($attribute, $value, $parameters)
+            {
+                return count($value) <= $parameters[0];
+            },
+            "Too many actions"
+        );
     }
 
     /**

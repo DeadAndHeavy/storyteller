@@ -21,7 +21,7 @@ $(document).on('click', '#add_episode_action', function ()
         $(".delete_episode_action").prop('disabled', false);
     });
 
-    if (actionLength == 10) {
+    if (actionLength == 9) {
         $("#add_episode_action").prop('disabled', true);
     }
 });
