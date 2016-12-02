@@ -6,9 +6,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Create Episode</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ route('store_episode', ['questId' => $quest->id ]) }}">
+                    <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data" action="{{ route('store_episode', ['questId' => $questId ]) }}">
                         {{ csrf_field() }}
-                        <input id="quest_id" type="hidden" name="quest_id" value="{{ $quest->id }}">
+                        <input id="quest_id" type="hidden" name="quest_id" value="{{ $questId }}">
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                             <label for="title" class="col-md-2 control-label">Episode short title</label>
@@ -79,25 +79,23 @@
                             @if (old('actions_list'))
                                 @foreach (old('actions_list') as $action_index => $action_data)
                                     @include('web/episode/partial/episode_action', [
-                                        'episodes' => $episodes,
                                         'action_index' => $action_index,
                                         'action_content' => $action_data['content'],
-                                        'quest_id' => $quest->id,
+                                        'quest_id' => $questId,
                                     ])
                                 @endforeach
                             @else
                                 @include('web/episode/partial/episode_action', [
-                                    'episodes' => $episodes,
                                     'action_index' => 1,
                                     'action_content' => '',
-                                    'quest_id' => $quest->id
+                                    'quest_id' => $questId
                                 ])
                             @endif
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-1 col-md-offset-2">
-                                <button id="add_episode_action" data-quest_id="{{ $quest->id }}" class="btn btn-success" type="button">
+                                <button id="add_episode_action" data-quest_id="{{ $questId }}" class="btn btn-success" type="button">
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                 </button>
                             </div>
@@ -112,7 +110,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-2">
-                                <a href="{{ route('all_episodes', ['questId' => $quest->id]) }}" class="btn btn-default">
+                                <a href="{{ route('all_episodes', ['questId' => $questId]) }}" class="btn btn-default">
                                     <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to episodes
                                 </a>
                                 <button type="submit" class="btn btn-primary">

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Web;
 
 use App\Core\Service\EpisodeService;
+use App\Core\Service\QuestLogicService;
 use App\Core\Service\ScenarioService;
 use App\Episode;
 use App\Http\Controllers\Controller;
 use App\Core\Service\QuestService;
+use App\Http\Requests\MassVariablesRequest;
 use App\Quest;
+use App\QuestVariable;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -19,12 +22,17 @@ class ScenarioController extends Controller
      * @var ScenarioService
      */
     private $scenarioService;
+    /**
+     * @var QuestLogicService
+     */
+    private $questLogicService;
 
-    public function __construct(QuestService $questService, EpisodeService $episodeService, ScenarioService $scenarioService)
+    public function __construct(QuestService $questService, EpisodeService $episodeService, ScenarioService $scenarioService, QuestLogicService $questLogicService)
     {
         $this->questService = $questService;
         $this->episodeService = $episodeService;
         $this->scenarioService = $scenarioService;
+        $this->questLogicService = $questLogicService;
     }
 
     public function index($questId)
@@ -33,10 +41,11 @@ class ScenarioController extends Controller
             throw new BadRequestHttpException();
         }
 
-        $episodes = Episode::where('quest_id', $questId)->with('quest', 'episodeActions')->get();
         return view('web/scenario/index', [
             'questId' => $questId,
-            'episodes' => $episodes
+            'episodes' => Episode::where('quest_id', $questId)->with('quest', 'episodeActions')->get(),
+            'variableTypes' => QuestLogicService::getAllVariableTypes(),
+            'questVariables' => $this->questLogicService->getQuestVariables($questId),
         ]);
     }
 
@@ -77,6 +86,36 @@ class ScenarioController extends Controller
             'imageModificationTime' => filemtime($this->episodeService->getEpisodeImagePath($questId, $startEpisode->id)),
             'startEpisode' => $startEpisode
         ]);
+    }
+
+    public function saveVariables(MassVariablesRequest $request)
+    {
+        if (!$this->questService->isOwnQuest($request->questId)) {
+            throw new BadRequestHttpException();
+        }
+
+        $this->questLogicService->saveVariables($request->get('variables_list'));
+
+        return redirect(route('scenario', ['questId' => $request->questId]));
+    }
+
+    public function renderVariableEditForm(Request $request)
+    {
+        return view('web/scenario/partial/rendered_edit_variable', [
+            'variable' => QuestVariable::find($request->input('variable_id')),
+            'variableTypes' => QuestLogicService::getAllVariableTypes(),
+        ])->render();
+    }
+
+    public function destroyVariable($questId, $variableId)
+    {
+        if (!$this->questService->isOwnQuest($questId)) {
+            throw new BadRequestHttpException();
+        }
+
+        $this->questLogicService->destroyVariable($variableId);
+
+        return redirect(route('scenario', ['questId' => $questId]));
     }
 
     public function finish($questId)

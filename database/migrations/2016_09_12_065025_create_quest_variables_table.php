@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVariablesTable extends Migration
+class CreateQuestVariablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,16 @@ class CreateVariablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('variables', function (Blueprint $table) {
+        Schema::create('quest_variables', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('quest_id')->unsigned();
             $table->foreign('quest_id')->references('id')->on('quests')->onDelete('cascade');
             $table->index('quest_id');
-            $table->integer('game_id')->unsigned();
-            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
-            $table->index('game_id');
             $table->string('title');
-            $table->string('value');
+            $table->string('type');
+            $table->string('default_value');
+            $table->boolean('track_state');
+            $table->index('track_state');
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreateVariablesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('variables');
+        Schema::drop('quest_variables');
     }
 }

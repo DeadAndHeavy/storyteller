@@ -41,8 +41,8 @@
                                 <a href="{{ route('all_episodes', ['questId' => $quest->id]) }}" class="btn btn-primary" title="Manage quest episodes">
                                     <span class="glyphicon glyphicon-film" aria-hidden="true"></span> Episodes
                                 </a>
-                                <a href="{{ route('scenario', ['questId' => $quest->id]) }}" class="btn btn-primary" title="Quest scenario">
-                                    <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Scenario
+                                <a href="{{ route('scenario', ['questId' => $quest->id]) }}" class="btn btn-primary" title="Quest logic">
+                                    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Quest logic
                                 </a>
                                 @if ($quest->approval)
                                     @if ($quest->approval->approve_status == \App\Core\Service\QuestApproveService::QUEST_APPROVE_STATUS_REJECTED)
@@ -72,6 +72,7 @@
                         @endif
                     </div>
                     <div class="col-md-12 margin-top-30" id="quest_comments_container">
+                        <hr>
                         @each('web.quest.partial.quest_comment', $quest->comments, 'comment')
                     </div>
                     @if (Auth::check())

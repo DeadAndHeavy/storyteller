@@ -43,8 +43,7 @@ class EpisodeController extends Controller
         }
 
         return view('web/episode/create', [
-            'quest' => Quest::find($questId),
-            'episodes' => Episode::where('quest_id', $questId)->get(),
+            'questId' => $questId,
             'types' => $this->episodeService->getAllEpisodeTypes(),
         ]);
     }
@@ -62,14 +61,10 @@ class EpisodeController extends Controller
 
     public function renderEpisodeAction(Request $request)
     {
-        $questId = $request->get('questId');
-        $episodes = Episode::where('quest_id', $questId)->get();
-
         return view('web/episode/partial/episode_action', [
             'action_index' => $request->get('actionIndex'),
             'action_content' => '',
-            'episodes' => $episodes,
-            'quest_id' => $questId
+            'quest_id' => $request->get('questId'),
         ])->render();
     }
 

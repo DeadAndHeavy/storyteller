@@ -7,9 +7,72 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Manage quest scenario</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ route('save_scenario', ['questId' => $questId]) }}">
-                            {{ csrf_field() }}
-                            <table id="scenario_table" class="table table-bordered table-responsive">
+                        <div class="col-md-12">
+                            <ul class="nav nav-tabs nav-justified" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#variables" aria-controls="variables" role="tab" data-toggle="tab"><h4>Variables</h4></a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#scenario" aria-controls="scenario" role="tab" data-toggle="tab"><h4>Scenario Steps</h4></a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content margin-top-30">
+                                <div role="tabpanel" class="tab-pane active" id="variables">
+                                    <div class="bottom-buffer" id="quest_variables">
+                                        @if (count($questVariables))
+                                            <table id="quest_variables_table" class="table table-bordered">
+                                                <thead>
+                                                <tr class="active">
+                                                    <th class="text-center vertical-align">Title</th>
+                                                    <th class="text-center vertical-align">Type</th>
+                                                    <th class="text-center vertical-align">Default value</th>
+                                                    <th class="text-center vertical-align">Track state</th>
+                                                    <th class="text-center vertical-align">Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @each('web.scenario.partial.variable', $questVariables, 'variable')
+                                                </tbody>
+                                            </table>
+                                        @else
+                                            No variables
+                                        @endif
+                                    </div>
+                                    <form class="form-horizontal" role="form" method="POST" action="{{ route('save_variables', ['questId' => $questId]) }}">
+                                        {{ csrf_field() }}
+                                        <div id="quest_variables_container">
+                                            @if (old('variables_list'))
+                                                @foreach (old('variables_list') as $variableIndex => $variableData)
+                                                    @include('web.scenario.partial.rendered_variable', [
+                                                        'variable_index' => $variableIndex,
+                                                        'title' => isset($variableData->title) ? $variableData->title : '',
+                                                        'type' => isset($variableData->type) ? $variableData->type : '',
+                                                        'default_value' => isset($variableData->default_value) ? $variableData->default_value : '',
+                                                ])
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <button id="add_quest_variable" data-quest_id="{{ $questId }}" class="btn btn-success" type="button">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add new variable
+                                        </button>
+
+                                        <div class="control-buttons top-buffer">
+                                            <a href="{{ route('own_quests') }}" class="btn btn-default">
+                                                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to own quests
+                                            </a>
+                                            <button type="submit" class="btn btn-primary">
+                                                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save new variables
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="scenario">
+                                    trololo
+                                </div>
+                            </div>
+                        </div>
+                            <!--<table id="scenario_table" class="table table-bordered table-responsive">
                                 <thead>
                                 <tr class="active">
                                     <th class="col-md-3 text-center">Episode title</th>
@@ -54,16 +117,8 @@
                                     </tr>
                                 @endforeach
                                 </tbody>
-                            </table>
-                            <div class="control-buttons top-buffer">
-                                <a href="{{ route('own_quests') }}" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to own quests
-                                </a>
-                                <button type="submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save changes
-                                </button>
-                            </div>
-                        </form>
+                            </table>-->
+
                     </div>
                 </div>
             </div>
