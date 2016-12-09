@@ -46,13 +46,12 @@ Route::group(['namespace' => 'Web'], function() {
         Route::post('/quest/{questId}/scenario', 'ScenarioController@save')->name('save_scenario');
         Route::post('/quest/{questId}/scenario/saveVariables', 'ScenarioController@saveVariables')->name('save_variables');
         Route::delete('/quest/{questId}/variable/{variableId}', 'ScenarioController@destroyVariable')->name('delete_quest_variable');
-        Route::get('/variable/renderVariableEditForm', 'ScenarioController@renderVariableEditForm');
+        Route::get('/quest/{questId}/variable/{variableId}/edit', 'ScenarioController@editVariable')->name('edit_quest_variable');
         Route::patch('/quest/{questId}/variable/{variableId}', 'ScenarioController@updateVariable')->name('update_quest_variable');
 
         Route::get('/quest/{questId}/logic', 'QuestLogicController@index')->name('quest_logic_index');
         Route::get('/quest/{questId}/variable/create', 'QuestLogicController@createQuestVariable')->name('create_quest_variable');
         Route::post('/quest/{questId}/variable', 'QuestLogicController@storeQuestVariable')->name('store_quest_variable');
-        Route::get('/quest/{questId}/variable/{variableId}/edit', 'QuestLogicController@editQuestVariable')->name('edit_quest_variable');
 
         Route::get('/variable/renderVariable', 'QuestLogicController@renderVariable');
 

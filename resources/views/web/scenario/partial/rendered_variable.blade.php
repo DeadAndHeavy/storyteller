@@ -1,4 +1,4 @@
-<div class="quest_variable form-group" data-variable_index="{{ $variable_index }}">
+<div class="new_quest_variable form-group" data-variable_index="{{ $variable_index }}">
     <input name="variables_list[{{ $variable_index }}][quest_id]" type="hidden" value="{{ $questId }}">
     <div class="col-md-3 {{ $errors->has('variables_list.' . $variable_index . '.title') ? 'has-error' : '' }}">
         <input name="variables_list[{{ $variable_index }}][title]" type="text" class="form-control" value="{{ old('variables_list.' . $variable_index . '.title') ? old('variables_list.' . $variable_index . '.title') : '' }}" placeholder="Enter variable title...">

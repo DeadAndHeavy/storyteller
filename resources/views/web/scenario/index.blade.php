@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
+@section('scripts')
+    <script type="text/javascript" src="{{ URL::asset('js/scenario.js') }}"></script>
+@endsection
+
 @section('content')
-    <div class="container">
+    <div id="quest_logic_page" class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -9,26 +13,26 @@
                     <div class="panel-body">
                         <div class="col-md-12">
                             <ul class="nav nav-tabs nav-justified" role="tablist">
-                                <li role="presentation" class="active">
+                                <li role="presentation">
                                     <a href="#variables" aria-controls="variables" role="tab" data-toggle="tab"><h4>Variables</h4></a>
                                 </li>
-                                <li role="presentation">
+                                <li role="presentation" class="active">
                                     <a href="#scenario" aria-controls="scenario" role="tab" data-toggle="tab"><h4>Scenario Steps</h4></a>
                                 </li>
                             </ul>
 
                             <div class="tab-content margin-top-30">
-                                <div role="tabpanel" class="tab-pane active" id="variables">
+                                <div role="tabpanel" class="tab-pane" id="variables">
                                     <div class="bottom-buffer" id="quest_variables">
                                         @if (count($questVariables))
                                             <table id="quest_variables_table" class="table table-bordered">
                                                 <thead>
                                                 <tr class="active">
-                                                    <th class="text-center vertical-align">Title</th>
-                                                    <th class="text-center vertical-align">Type</th>
-                                                    <th class="text-center vertical-align">Default value</th>
-                                                    <th class="text-center vertical-align">Track state</th>
-                                                    <th class="text-center vertical-align">Actions</th>
+                                                    <th class="text-center vertical-align col-md-3">Title</th>
+                                                    <th class="text-center vertical-align col-md-2">Type</th>
+                                                    <th class="text-center vertical-align col-md-3">Default value</th>
+                                                    <th class="text-center vertical-align col-md-1">Track state</th>
+                                                    <th class="text-center vertical-align col-md-2">Actions</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -61,14 +65,83 @@
                                             <a href="{{ route('own_quests') }}" class="btn btn-default">
                                                 <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back to own quests
                                             </a>
-                                            <button type="submit" class="btn btn-primary">
+                                            <button id="save_new_variables" type="submit" class="btn btn-primary">
                                                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save new variables
                                             </button>
                                         </div>
                                     </form>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="scenario">
-                                    trololo
+                                <div role="tabpanel" class="tab-pane active" id="scenario">
+                                    <div class="panel-group" id="episodes_accordion" role="tablist" aria-multiselectable="true">
+                                        @foreach ($episodes as $key => $episode)
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading without-padding" role="tab" id="episode_heading_{{ $episode->id }}">
+                                                    <h4 class="panel-title">
+                                                        <a role="button" data-toggle="collapse" data-parent="#episodes_accordion" href="#episode_collapse_{{ $episode->id }}" aria-expanded="true" aria-controls="episode_collapse_{{ $episode->id }}">
+                                                            {{ $episode->title }}
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="episode_collapse_{{ $episode->id }}" class="panel-collapse collapse {{ $key == 0 ? 'in' : '' }}" role="tabpanel" aria-labelledby="episode_heading_{{ $episode->id }}">
+                                                    <div class="panel-body">
+                                                        <div class="episode_logic" data-episode-id="{{ $episode->id }}">
+                                                            <div class="episode_logic_screen col-md-6 panel panel-default">
+                                                                <div class="panel-body">
+                                                                    <div class="logic_row active"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="episode_logic_operations col-md-6">
+                                                                <div class="variables_list">
+                                                                    <div class="btn-group">
+                                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                            Add variable <span class="caret"></span>
+                                                                        </button>
+                                                                        <ul class="dropdown-menu">
+                                                                            @foreach ($questVariables as $variable)
+                                                                                <li>
+                                                                                    <a class="add-logic-var-button" href="javascript:void(0);" data-variable-title="{{ $variable->title }}" data-variable-id="{{ $variable->id }}">{{ $variable->title }}</a>
+                                                                                </li>
+                                                                            @endforeach
+                                                                        </ul>
+                                                                    </div>
+                                                                    <button type="button" class="btn btn-default add-logic-assignment-button">=</button>
+                                                                    <button type="button" class="btn btn-default add-logic-new-line-button">
+                                                                        <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    <button type="button" data-toggle="modal" data-target="#removeEpisodeLogicModal" class="btn btn-danger add-logic-remove-all-button">
+                                                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-default enable_removing_tool">
+                                                                        <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-default add-logic-if-button">IF</button>
+                                                                    <button type="button" class="btn btn-default add-logic-else-button">ELSE</button>
+                                                                    <button type="button" class="btn btn-default add-logic-elseif-button">ELSEIF</button>
+                                                                    <button type="button" class="btn btn-default add-logic-endif-button">ENDIF</button>
+                                                                    <button type="button" class="btn btn-default add-logic-left-bracket-button">(</button>
+                                                                    <button type="button" class="btn btn-default add-logic-right-bracket-button">)</button>
+                                                                    <button type="button" class="btn btn-default add-logic-plus-button">+</button>
+                                                                    <button type="button" class="btn btn-default add-logic-minus-button">-</button>
+                                                                    <button type="button" class="btn btn-default add-logic-multiplication-button">*</button>
+                                                                    <button type="button" class="btn btn-default add-logic-division-button">/</button>
+                                                                    <button type="button" class="btn btn-default add-logic-equal-button">==</button>
+                                                                    <button type="button" class="btn btn-default add-logic-not-equal-button">!=</button>
+                                                                    <button type="button" class="btn btn-default add-logic-greater-button">></button>
+                                                                    <button type="button" class="btn btn-default add-logic-greater-or-equal-button">>=</button>
+                                                                    <button type="button" class="btn btn-default add-logic-lower-button"><</button>
+                                                                    <button type="button" class="btn btn-default add-logic-lower-or-equal-button"><=</button>
+                                                                    <button type="button" class="btn btn-default add-logic-and-button">AND</button>
+                                                                    <button type="button" class="btn btn-default add-logic-or-button">OR</button>
+                                                                    <button type="button" class="btn btn-default add-logic-not-button">NOT</button>
+                                                                    <button type="button" class="btn btn-default add-logic-value-button">VALUE</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -124,4 +197,5 @@
             </div>
         </div>
     </div>
+@include('web/modal/remove_all_episode_logic')
 @endsection

@@ -1,4 +1,4 @@
-<div class="modal" id="rejectQuestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal" id="rejectQuestModal" tabindex="-1" role="dialog" aria-labelledby="rejectQuestModal">
     <div class="modal-dialog" role="document">
         <form class="reject_quest" data-toggle="validator" style="display:inline" role="form" action="" method="POST">
             {{ csrf_field() }}

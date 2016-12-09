@@ -2,6 +2,31 @@ textarea {
     resize: none;
 }
 
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events: all;
+}
+
+.without-padding {
+    padding: 0;
+}
+
 @font-face {
     font-family: Segoe;
     src: url('../fonts/segoe.ttf');
@@ -235,4 +260,64 @@ a {
 
 .approve-status-2 {
     color: green;
+}
+
+.variable_edit_block {
+    display: none;
+}
+
+.variable_show_block {
+    display: block;
+}
+
+.episode_logic_screen {
+    height: 200px;
+    max-height: 200px;
+    overflow: scroll;
+    padding-left: 0;
+}
+
+.episode_logic_screen .panel-body .logic_row  {
+    margin: 5px 0;
+    padding-bottom: 3px;
+    padding-left: 13px;
+    min-height: 23px;
+    border-left: 6px solid #337ab7;
+    white-space: nowrap;
+}
+
+.episode_logic_screen .panel-body .logic_row.active {
+    border-left: 6px solid #5bc0de;
+}
+
+#episodes_accordion .panel-title a {
+    padding: 15px;
+    display: block;
+    width: 100%;
+    font-family: Segoe;
+}
+
+#quest_logic_page .nav-tabs {
+    font-family: Segoe;
+}
+
+.logic_variable_on_screen, .logic_assignment_on_screen, .logic_if_on_screen, .logic_elseif_on_screen, .logic_else_on_screen, .logic_endif_on_screen,
+.logic_left_bracket_on_screen, .logic_right_bracket_on_screen, .logic_plus_on_screen, .logic_minus_on_screen, .logic_equal_on_screen,
+.logic_multiplication_on_screen, .logic_division_on_screen, .logic_value_on_screen, .logic_not_equal_on_screen, .logic_and_on_screen,
+.logic_or_on_screen, .logic_not_on_screen, .logic_greater_on_screen, .logic_greater_or_equal_on_screen, .logic_lower_on_screen, .logic_lower_or_equal_on_screen{
+    font-size: 13px;
+    margin: 1px;
+}
+
+.logic_value_on_screen {
+    text-align: center;
+    width: 60px;
+}
+
+.cursor_destroyer {
+    cursor: crosshair;
+}
+
+.logic_row:hover{
+    cursor: pointer;
 }

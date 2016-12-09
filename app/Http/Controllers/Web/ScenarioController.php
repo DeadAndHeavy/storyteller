@@ -9,6 +9,7 @@ use App\Episode;
 use App\Http\Controllers\Controller;
 use App\Core\Service\QuestService;
 use App\Http\Requests\MassVariablesRequest;
+use App\Http\Requests\QuestVariableRequest;
 use App\Quest;
 use App\QuestVariable;
 use Illuminate\Http\Request;
@@ -99,12 +100,28 @@ class ScenarioController extends Controller
         return redirect(route('scenario', ['questId' => $request->questId]));
     }
 
-    public function renderVariableEditForm(Request $request)
+    public function editVariable($questId, $variableId)
     {
-        return view('web/scenario/partial/rendered_edit_variable', [
-            'variable' => QuestVariable::find($request->input('variable_id')),
-            'variableTypes' => QuestLogicService::getAllVariableTypes(),
-        ])->render();
+        if (!$this->questService->isOwnQuest($questId)) {
+            throw new BadRequestHttpException();
+        }
+
+        return view('web/scenario/edit_variable', [
+            'questId' => $questId,
+            'variable' => QuestVariable::find($variableId),
+            'types' => QuestLogicService::getAllVariableTypes(),
+        ]);
+    }
+
+    public function updateVariable(QuestVariableRequest $request)
+    {
+        if (!$this->questService->isOwnQuest($request->questId)) {
+            throw new BadRequestHttpException();
+        }
+
+        $this->questLogicService->updateVariable($request->variableId, $request->all());
+
+        return redirect(route('scenario', ['questId' => $request->questId]));
     }
 
     public function destroyVariable($questId, $variableId)

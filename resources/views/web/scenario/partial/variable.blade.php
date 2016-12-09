@@ -4,9 +4,9 @@
     <td class="text-center vertical-align">{{ $variable->default_value }}</td>
     <td class="text-center vertical-align">{{ $variable->track_state ? 'Yes' : 'No'}}</td>
     <td class="text-center vertical-align">
-        <button type="button" data-variable_id="{{ $variable->id }}" class="btn btn-primary edit_quest_variable" title="Edit variable">
+        <a href="{{ route('edit_quest_variable', ['questId' => $variable->quest_id, 'variableId' => $variable->id]) }}" class="btn btn-primary edit_quest_variable" title="Edit variable">
             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-        </button>
+        </a>
         <form class="delete_variable" style="display:inline" role="form" action="{{ route('delete_quest_variable', ['questId' => $variable->quest_id, 'variableId' => $variable->id]) }}" method="POST">
             <input type="hidden" name="_method" value="DELETE">
             {{ csrf_field() }}

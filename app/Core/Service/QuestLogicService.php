@@ -29,8 +29,10 @@ class QuestLogicService
 
     public function saveVariables($variablesDataList)
     {
-        foreach($variablesDataList as $variableData) {
-            (new QuestVariable($variableData))->save();
+        if (count($variablesDataList)) {
+            foreach($variablesDataList as $variableData) {
+                (new QuestVariable($variableData))->save();
+            }
         }
     }
 

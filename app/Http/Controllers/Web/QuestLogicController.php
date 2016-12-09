@@ -68,31 +68,6 @@ class QuestLogicController extends Controller
         return redirect(route('quest_logic_index', $request->questId));
     }
 
-    public function editQuestVariable($questId, $variableId)
-    {
-        if (!$this->questService->isOwnQuest($questId)) {
-            throw new BadRequestHttpException();
-        }
-
-        return view('web/quest_logic/edit_variable', [
-            'questId' => $questId,
-            'variable' => QuestVariable::find($variableId),
-            'types' => QuestLogicService::getAllVariableTypes(),
-        ]);
-    }
-
-    public function updateQuestVariable(QuestVariableRequest $request)
-    {
-        if (!$this->questService->isOwnQuest($request->questId)) {
-            throw new BadRequestHttpException();
-        }
-
-        $this->questLogicService->updateVariable($request->variableId, $request->all());
-
-        return redirect(route('quest_logic_index', ['questId' => $request->questId]));
-    }
-
-
 
     public function renderVariable(Request $request)
     {
