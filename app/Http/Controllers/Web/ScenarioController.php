@@ -50,17 +50,19 @@ class ScenarioController extends Controller
         ]);
     }
 
-    public function save(Request $request)
+    public function saveLogic(Request $request)
     {
-        $targets = $request->get('scenario_episode_action_targets');
+        $episodeActions = $request->get('episode_action');
 
-        foreach ($targets as $episodeActionId => $targetEpisodeId) {
-            if ($this->episodeService->isOwnEpisodeAction($episodeActionId) && $this->episodeService->isOwnEpisode($targetEpisodeId)) {
-                $this->episodeService->setEpisodeActionTargetId($episodeActionId, $targetEpisodeId);
+        if ($episodeActions && is_array($episodeActions)) {
+            foreach ($episodeActions as $episodeActionId => $episodeActionData) {
+                if ($this->episodeService->isOwnEpisodeAction($episodeActionId)) {
+                    $this->episodeService->updateEpisodeAction($episodeActionId, $episodeActionData);
+                }
             }
         }
 
-        return redirect(route('own_quests'));
+        return redirect(route('scenario', ['questId' => $request->questId]));
     }
 
     public function renderNewScenarioStep(Request $request)

@@ -111,18 +111,25 @@ class EpisodeService
         $currentEpisodeActionIds = [];
         $oldEpisodeActionIds = Episode::find($episodeId)->episodeActions->pluck('id')->toArray();
 
-        foreach ($questData['actions_list'] as $episodeActionData) {
-            if ($episodeActionData['action_id']) {
-                EpisodeAction::find($episodeActionData['action_id'])->update(['content' => $episodeActionData['content']]);
-                $currentEpisodeActionIds[] = $episodeActionData['action_id'];
-            } else {
-                EpisodeAction::create([
-                    'content' => $episodeActionData['content'],
-                    'episode_id' => $episodeId
-                ]);
+        if (isset($questData['actions_list']) && $questData['actions_list']) {
+            foreach ($questData['actions_list'] as $episodeActionData) {
+                if ($episodeActionData['action_id']) {
+                    EpisodeAction::find($episodeActionData['action_id'])->update(['content' => $episodeActionData['content']]);
+                    $currentEpisodeActionIds[] = $episodeActionData['action_id'];
+                } else {
+                    EpisodeAction::create([
+                        'content' => $episodeActionData['content'],
+                        'episode_id' => $episodeId
+                    ]);
+                }
             }
         }
         EpisodeAction::destroy(array_diff($oldEpisodeActionIds, $currentEpisodeActionIds));
+    }
+
+    public function updateEpisodeAction($episodeActionId, $data)
+    {
+        EpisodeAction::find($episodeActionId)->update($data);
     }
 
     /**

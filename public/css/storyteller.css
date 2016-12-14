@@ -2,6 +2,14 @@ textarea {
     resize: none;
 }
 
+.float-right {
+    float: right;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
 .vertical-alignment-helper {
     display:table;
     height: 100%;
@@ -270,14 +278,14 @@ a {
     display: block;
 }
 
-.episode_logic_screen {
-    height: 200px;
-    max-height: 200px;
+.episode_action_logic_screen {
+    height: 220px;
+    max-height: 220px;
     overflow: scroll;
     padding-left: 0;
 }
 
-.episode_logic_screen .panel-body .logic_row  {
+.episode_action_logic_screen .panel-body .logic_row  {
     margin: 5px 0;
     padding-bottom: 3px;
     padding-left: 13px;
@@ -286,36 +294,46 @@ a {
     white-space: nowrap;
 }
 
-.episode_logic_screen .panel-body .logic_row.active {
+.episode_action_logic_screen .panel-body .logic_row.active {
     border-left: 6px solid #5bc0de;
 }
 
-#episodes_accordion .panel-title a {
-    padding: 15px;
-    display: block;
-    width: 100%;
+.episode_container .panel-heading {
     font-family: Segoe;
+}
+
+.episode_container .panel-title a {
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+    width: 100%;
 }
 
 #quest_logic_page .nav-tabs {
     font-family: Segoe;
 }
 
-.logic_variable_on_screen, .logic_assignment_on_screen, .logic_if_on_screen, .logic_elseif_on_screen, .logic_else_on_screen, .logic_endif_on_screen,
-.logic_left_bracket_on_screen, .logic_right_bracket_on_screen, .logic_plus_on_screen, .logic_minus_on_screen, .logic_equal_on_screen,
-.logic_multiplication_on_screen, .logic_division_on_screen, .logic_value_on_screen, .logic_not_equal_on_screen, .logic_and_on_screen,
-.logic_or_on_screen, .logic_not_on_screen, .logic_greater_on_screen, .logic_greater_or_equal_on_screen, .logic_lower_on_screen, .logic_lower_or_equal_on_screen{
+.logic_data_variable_on_screen, .logic_data_assignment_on_screen, .logic_data_if_on_screen, .logic_data_elseif_on_screen, .logic_data_else_on_screen,
+.logic_data_endif_on_screen, .logic_data_left_bracket_on_screen, .logic_data_right_bracket_on_screen, .logic_data_plus_on_screen, .logic_data_minus_on_screen,
+.logic_data_equal_on_screen, .logic_data_multiplication_on_screen, .logic_data_division_on_screen, .logic_data_value_on_screen, .logic_data_not_equal_on_screen,
+.logic_data_and_on_screen, .logic_data_or_on_screen, .logic_data_not_on_screen, .logic_data_greater_on_screen, .logic_data_greater_or_equal_on_screen,
+.logic_data_lower_on_screen, .logic_data_lower_or_equal_on_screen, .logic_indent_on_screen, .logic_data_plus_equal_on_screen, .logic_data_minus_equal_on_screen,
+.logic_data_multiplication_equal_on_screen, .logic_data_division_equal_on_screen, .logic_data_end_of_operator_on_screen {
     font-size: 13px;
     margin: 1px;
 }
 
-.logic_value_on_screen {
+.operation_buttons_set {
+    margin-bottom: 3px;
+}
+
+.logic_data_value_on_screen input{
     text-align: center;
     width: 60px;
 }
 
 .cursor_destroyer {
-    cursor: crosshair;
+    cursor: crosshair !important;
 }
 
 .logic_row:hover{

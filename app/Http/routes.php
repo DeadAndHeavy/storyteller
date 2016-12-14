@@ -43,7 +43,7 @@ Route::group(['namespace' => 'Web'], function() {
         Route::get('/quest/{questId}/scenario', 'ScenarioController@index')->name('scenario');
         Route::post('/quest/{questId}/scenario/save', 'ScenarioController@save')->name('save_scenario');
         Route::get('/scenario/renderNewStep', 'ScenarioController@renderNewStep');
-        Route::post('/quest/{questId}/scenario', 'ScenarioController@save')->name('save_scenario');
+        Route::post('/quest/{questId}/scenario', 'ScenarioController@saveLogic')->name('save_scenario');
         Route::post('/quest/{questId}/scenario/saveVariables', 'ScenarioController@saveVariables')->name('save_variables');
         Route::delete('/quest/{questId}/variable/{variableId}', 'ScenarioController@destroyVariable')->name('delete_quest_variable');
         Route::get('/quest/{questId}/variable/{variableId}/edit', 'ScenarioController@editVariable')->name('edit_quest_variable');

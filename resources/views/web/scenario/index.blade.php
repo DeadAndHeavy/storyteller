@@ -72,76 +72,168 @@
                                     </form>
                                 </div>
                                 <div role="tabpanel" class="tab-pane active" id="scenario">
-                                    <div class="panel-group" id="episodes_accordion" role="tablist" aria-multiselectable="true">
-                                        @foreach ($episodes as $key => $episode)
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading without-padding" role="tab" id="episode_heading_{{ $episode->id }}">
-                                                    <h4 class="panel-title">
-                                                        <a role="button" data-toggle="collapse" data-parent="#episodes_accordion" href="#episode_collapse_{{ $episode->id }}" aria-expanded="true" aria-controls="episode_collapse_{{ $episode->id }}">
-                                                            {{ $episode->title }}
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="episode_collapse_{{ $episode->id }}" class="panel-collapse collapse {{ $key == 0 ? 'in' : '' }}" role="tabpanel" aria-labelledby="episode_heading_{{ $episode->id }}">
-                                                    <div class="panel-body">
-                                                        <div class="episode_logic" data-episode-id="{{ $episode->id }}">
-                                                            <div class="episode_logic_screen col-md-6 panel panel-default">
-                                                                <div class="panel-body">
-                                                                    <div class="logic_row active"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="episode_logic_operations col-md-6">
-                                                                <div class="variables_list">
-                                                                    <div class="btn-group">
-                                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                            Add variable <span class="caret"></span>
-                                                                        </button>
-                                                                        <ul class="dropdown-menu">
-                                                                            @foreach ($questVariables as $variable)
-                                                                                <li>
-                                                                                    <a class="add-logic-var-button" href="javascript:void(0);" data-variable-title="{{ $variable->title }}" data-variable-id="{{ $variable->id }}">{{ $variable->title }}</a>
-                                                                                </li>
-                                                                            @endforeach
-                                                                        </ul>
+                                    <form id="save_scenario" class="form-horizontal" role="form" method="POST" action="{{ route('save_scenario', ['questId' => $questId]) }}">
+                                        {{ csrf_field() }}
+                                        @foreach ($episodes as $episodeIndex => $episode)
+                                            <div class="panel-group episode_container col-md-12" id="episode_{{ $episode->id }}_accordion" role="tablist" aria-multiselectable="true">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading without-padding" role="tab" id="episode_heading_{{ $episode->id }}">
+                                                        <h4 class="panel-title">
+                                                            <a role="button" data-toggle="collapse" data-parent="#episode_{{ $episode->id }}_accordion" href="#episode_collapse_{{ $episode->id }}" aria-expanded="true" aria-controls="episode_collapse_{{ $episode->id }}">
+                                                                <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
+                                                                {{ $episode->title }}
+                                                                @if ($episode->type == \App\Core\Service\EpisodeService::EPISODE_TYPE_START)
+                                                                    <span class="glyphicon glyphicon-home float-right cursor-pointer" aria-hidden="true" title="Start episode"></span>
+                                                                @endif
+                                                                @if ($episode->type == \App\Core\Service\EpisodeService::EPISODE_TYPE_FINISH)
+                                                                    <span class="glyphicon glyphicon-flag float-right cursor-pointer" aria-hidden="true" title="Finish episode"></span>
+                                                                @endif
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="episode_collapse_{{ $episode->id }}" class="panel-collapse collapse {{ $episodeIndex == 0 ? 'in' : '' }}" role="tabpanel" aria-labelledby="episode_heading_{{ $episode->id }}">
+                                                        <div class="panel-body">
+                                                            @foreach ($episode->episodeActions as $episodeActionIndex => $episodeAction)
+                                                                <div class="panel-group episode_actions_accordion col-md-12" id="episode_action_{{ $episodeAction->id }}_accordion" role="tablist" aria-multiselectable="true">
+                                                                    <div class="panel panel-info">
+                                                                        <div class="panel-heading without-padding" role="tab" id="episode_action_heading_{{ $episodeAction->id }}">
+                                                                            <h4 class="panel-title">
+                                                                                <a role="button" data-toggle="collapse" data-parent="#episode_action_{{ $episodeAction->id }}_accordion" href="#episode_action_collapse_{{ $episodeAction->id }}" aria-expanded="true" aria-controls="episode_action_collapse_{{ $episodeAction->id }}">
+                                                                                    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                                                                    {{ $episodeAction->content }}
+                                                                                </a>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div id="episode_action_collapse_{{ $episodeAction->id }}" class="panel-collapse collapse {{ $episodeActionIndex == 0 ? 'in' : '' }}" role="tabpanel" aria-labelledby="episode_action_heading_{{ $episodeAction->id }}">
+                                                                            <div class="panel-body">
+                                                                                <h4 class="text-center">Episode Action logic</h4>
+                                                                                <hr>
+                                                                                <div class="episode_action_logic col-md-12" data-episode-action-id="{{ $episodeAction->id }}">
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="episode_action_logic_screen panel panel-default">
+                                                                                            <div class="panel-body">
+                                                                                                @if ($episodeAction->logic)
+                                                                                                    {!! $episodeAction->logic !!}
+                                                                                                @else
+                                                                                                    <div class="logic_row active"></div>
+                                                                                                @endif
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="logic_screen_utilities top-buffer-5">
+                                                                                            <button type="button" data-toggle="modal" data-target="#removeEpisodeActionLogicModal" class="btn btn-danger add-logic-remove-all-button">
+                                                                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                                                            </button>
+                                                                                            <button type="button" class="btn btn-default enable_removing_tool" title="removing tool">
+                                                                                                <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="episode__action_logic_operations col-md-6">
+                                                                                        <div class="operation_buttons_set variables_list">
+                                                                                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add variables. You can add new variables on 'Variables' tab">
+                                                                                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                                                                            </button>
+                                                                                            <div class="btn-group">
+                                                                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                    Add variable <span class="caret"></span>
+                                                                                                </button>
+                                                                                                <ul class="dropdown-menu">
+                                                                                                    @foreach ($questVariables as $variable)
+                                                                                                        <li>
+                                                                                                            <a class="add-logic-var-button" href="javascript:void(0);" data-variable-title="{{ $variable->title }}" data-variable-id="{{ $variable->id }}">{{ $variable->title }}</a>
+                                                                                                        </li>
+                                                                                                    @endforeach
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="operation_buttons_set condition_elements_list">
+                                                                                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add condition elements">
+                                                                                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                                                                            </button>
+                                                                                            <button type="button" class="btn btn-success add-logic-if-button">IF</button>
+                                                                                            <button type="button" class="btn btn-success add-logic-else-button">ELSE</button>
+                                                                                            <button type="button" class="btn btn-success add-logic-elseif-button">ELSEIF</button>
+                                                                                            <button type="button" class="btn btn-success add-logic-endif-button">ENDIF</button>
+                                                                                        </div>
+                                                                                        <div class="operation_buttons_set comparison_operations_list">
+                                                                                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add comparison operators">
+                                                                                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                                                                            </button>
+                                                                                            <button type="button" class="btn btn-warning add-logic-equal-button">==</button>
+                                                                                            <button type="button" class="btn btn-warning add-logic-not-equal-button">!=</button>
+                                                                                            <button type="button" class="btn btn-warning add-logic-greater-button">></button>
+                                                                                            <button type="button" class="btn btn-warning add-logic-greater-or-equal-button">>=</button>
+                                                                                            <button type="button" class="btn btn-warning add-logic-lower-button"><</button>
+                                                                                            <button type="button" class="btn btn-warning add-logic-lower-or-equal-button"><=</button>
+                                                                                        </div>
+                                                                                        <div class="operation_buttons_set logical_operations_list">
+                                                                                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add logical operators">
+                                                                                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                                                                            </button>
+                                                                                            <button type="button" class="btn btn-warning add-logic-and-button">AND</button>
+                                                                                            <button type="button" class="btn btn-warning add-logic-or-button">OR</button>
+                                                                                            <button type="button" class="btn btn-warning add-logic-not-button">NOT</button>
+                                                                                        </div>
+                                                                                        <div class="operation_buttons_set arithmetic_operations_list">
+                                                                                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add arithmetic operators">
+                                                                                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                                                                            </button>
+                                                                                            <button type="button" class="btn btn-info add-logic-plus-button">+</button>
+                                                                                            <button type="button" class="btn btn-info add-logic-minus-button">-</button>
+                                                                                            <button type="button" class="btn btn-info add-logic-multiplication-button">*</button>
+                                                                                            <button type="button" class="btn btn-info add-logic-division-button">/</button>
+                                                                                            <button type="button" class="btn btn-info add-logic-plus-equal-button">+=</button>
+                                                                                            <button type="button" class="btn btn-info add-logic-minus-equal-button">-=</button>
+                                                                                            <button type="button" class="btn btn-info add-logic-multiplication-equal-button">*=</button>
+                                                                                            <button type="button" class="btn btn-info add-logic-division-equal-button">/=</button>
+                                                                                        </div>
+                                                                                        <div class="operation_buttons_set additional_operations_list">
+                                                                                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add addition elements">
+                                                                                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                                                                            </button>
+                                                                                            <button type="button" class="btn btn-default add-logic-assignment-button">=</button>
+                                                                                            <button type="button" class="btn btn-default add-logic-new-line-button">
+                                                                                                <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                                                                                            </button>
+                                                                                            <button type="button" class="btn btn-default add-logic-indent-button">INDENT</button>
+                                                                                            <button type="button" class="btn btn-default add-logic-left-bracket-button">(</button>
+                                                                                            <button type="button" class="btn btn-default add-logic-right-bracket-button">)</button>
+                                                                                            <button type="button" class="btn btn-default add-logic-end-of-operator-button">;</button>
+                                                                                            <button type="button" class="btn btn-default add-logic-value-button">VALUE</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                @if ($episode->type != \App\Core\Service\EpisodeService::EPISODE_TYPE_FINISH)
+                                                                                    <div class="col-md-12">
+                                                                                        <h4 class="text-center">Episode action target</h4>
+                                                                                        <hr>
+                                                                                        <select id="type" name="episode_action[{{ $episodeAction->id }}][target_episode_id]" class="form-control">
+                                                                                            <option disabled selected>Choose target episode</option>
+                                                                                            @foreach ($episodes as $episodeElement)
+                                                                                                @if ($episodeElement->id == $episodeAction->target_episode_id)
+                                                                                                    <option selected value="{{ $episodeElement->id }}">{{ $episodeElement->title }}</option>
+                                                                                                @else
+                                                                                                    <option value="{{ $episodeElement->id }}">{{ $episodeElement->title }}</option>
+                                                                                                @endif
+                                                                                            @endforeach
+                                                                                        </select>
+                                                                                    </div>
+                                                                                @endif
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-                                                                    <button type="button" class="btn btn-default add-logic-assignment-button">=</button>
-                                                                    <button type="button" class="btn btn-default add-logic-new-line-button">
-                                                                        <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
-                                                                    </button>
-                                                                    <button type="button" data-toggle="modal" data-target="#removeEpisodeLogicModal" class="btn btn-danger add-logic-remove-all-button">
-                                                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-default enable_removing_tool">
-                                                                        <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-default add-logic-if-button">IF</button>
-                                                                    <button type="button" class="btn btn-default add-logic-else-button">ELSE</button>
-                                                                    <button type="button" class="btn btn-default add-logic-elseif-button">ELSEIF</button>
-                                                                    <button type="button" class="btn btn-default add-logic-endif-button">ENDIF</button>
-                                                                    <button type="button" class="btn btn-default add-logic-left-bracket-button">(</button>
-                                                                    <button type="button" class="btn btn-default add-logic-right-bracket-button">)</button>
-                                                                    <button type="button" class="btn btn-default add-logic-plus-button">+</button>
-                                                                    <button type="button" class="btn btn-default add-logic-minus-button">-</button>
-                                                                    <button type="button" class="btn btn-default add-logic-multiplication-button">*</button>
-                                                                    <button type="button" class="btn btn-default add-logic-division-button">/</button>
-                                                                    <button type="button" class="btn btn-default add-logic-equal-button">==</button>
-                                                                    <button type="button" class="btn btn-default add-logic-not-equal-button">!=</button>
-                                                                    <button type="button" class="btn btn-default add-logic-greater-button">></button>
-                                                                    <button type="button" class="btn btn-default add-logic-greater-or-equal-button">>=</button>
-                                                                    <button type="button" class="btn btn-default add-logic-lower-button"><</button>
-                                                                    <button type="button" class="btn btn-default add-logic-lower-or-equal-button"><=</button>
-                                                                    <button type="button" class="btn btn-default add-logic-and-button">AND</button>
-                                                                    <button type="button" class="btn btn-default add-logic-or-button">OR</button>
-                                                                    <button type="button" class="btn btn-default add-logic-not-button">NOT</button>
-                                                                    <button type="button" class="btn btn-default add-logic-value-button">VALUE</button>
                                                                 </div>
-                                                            </div>
+                                                            @endforeach
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         @endforeach
-                                    </div>
+                                        <button type="submit" class="btn btn-primary">
+                                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save scenario
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
