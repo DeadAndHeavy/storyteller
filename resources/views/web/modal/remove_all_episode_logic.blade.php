@@ -8,7 +8,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger remove_episode_action_logic_button" data-dismiss="modal" title="Remove episode action logic">
+                    <button type="submit" class="btn btn-danger remove_container_logic_button" data-dismiss="modal" title="Remove logic in this container">
                         <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Remove logic
                     </button>
                 </div>

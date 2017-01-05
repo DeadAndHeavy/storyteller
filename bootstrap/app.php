@@ -52,13 +52,13 @@ $app->singleton(
 |
 */
 
-$app->configureMonologUsing(function($monolog) use ($app) {
-    $monolog->pushHandler(
-        (new Monolog\Handler\RotatingFileHandler(
-            '/var/log/storyteller/story.log',
-            $app->make('config')->get('app.log_max_files', 10)
-        ))->setFormatter(new Monolog\Formatter\LineFormatter(null, null, true, true))
-    );
+/**
+ * Configure Monolog.
+ */
+$app->configureMonologUsing(function(Monolog\Logger $monolog) {
+    $filename = '/var/log/storyteller/laravel-'.php_sapi_name().'.log';
+    $handler = (new Monolog\Handler\RotatingFileHandler($filename, 10))->setFormatter(new Monolog\Formatter\LineFormatter(null, null, true, true));
+    $monolog->pushHandler($handler);
 });
 
 return $app;

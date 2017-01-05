@@ -42,9 +42,24 @@ class ScenarioController extends Controller
             throw new BadRequestHttpException();
         }
 
+        $quest = Quest::find($questId);
+
+        $episodes = Episode::where('quest_id', $questId)->with('episodeActions')->get();
+
+        $episodeActionsValidationList = [];
+        foreach ($episodes as $episode) {
+            foreach ($episode->episodeActions as $episodeAction) {
+                $episodeActionsValidationList[$episodeAction->id] = ($episode->type == EpisodeService::EPISODE_TYPE_FINISH) || ($this->scenarioService->isValidContainerLogic($episodeAction->id) && $episodeAction->target_episode_id);
+            }
+        }
+
+        $episodeActionsValidationList['init'] = $this->scenarioService->isValidContainerLogic(false, $quest->id);
+
         return view('web/scenario/index', [
             'questId' => $questId,
-            'episodes' => Episode::where('quest_id', $questId)->with('quest', 'episodeActions')->get(),
+            'quest' => $quest,
+            'episodes' => $episodes,
+            'episodeActionsValidationList' => $episodeActionsValidationList,
             'variableTypes' => QuestLogicService::getAllVariableTypes(),
             'questVariables' => $this->questLogicService->getQuestVariables($questId),
         ]);
@@ -53,6 +68,8 @@ class ScenarioController extends Controller
     public function saveLogic(Request $request)
     {
         $episodeActions = $request->get('episode_action');
+
+        $this->questService->update($request->questId, ['init_logic' => $request->get('init_logic')]);
 
         if ($episodeActions && is_array($episodeActions)) {
             foreach ($episodeActions as $episodeActionId => $episodeActionData) {
