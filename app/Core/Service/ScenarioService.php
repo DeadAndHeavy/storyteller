@@ -145,15 +145,15 @@ class ScenarioService
     {
         if (!$episodeActionId && $questId) {
             $quest = Quest::find($questId);
-            $baseLogc = $quest->init_logic;
+            $baseLogic = $quest->init_logic;
         } elseif ($episodeActionId && !$questId) {
             $episodeAction = EpisodeAction::find($episodeActionId);
-            $baseLogc = $episodeAction->logic;
+            $baseLogic = $episodeAction->logic;
         } else {
             return false;
         }
-
-        $logicWithoutTrashTags = strip_tags($baseLogc, '<span><input>');
+        $baseLogic = preg_replace('/<span class=("|"([^"]*)\s)var_label("|\s([^"]*)")>VAR<\/span>/', "", $baseLogic);
+        $logicWithoutTrashTags = strip_tags($baseLogic, '<span><input>');
         preg_match_all('/<span.*?<\/span>/', $logicWithoutTrashTags, $logicStatementsList);
         $logicStatementsList = $logicStatementsList[0];
 
@@ -168,7 +168,7 @@ class ScenarioService
                     $code .= preg_replace(['/<span.*value=\"/', '/".*$/'], "", $logicStatement);
                     break;
                 case self::LOGIC_STATEMENT_ON_SCREEN_VARIABLE:
-                    $code .= '$' . strip_tags($logicStatement);
+                    $code .= '$' . preg_replace(['/<span.*value=\"/', '/".*$/'], "", $logicStatement);
                     break;
                 case self::LOGIC_STATEMENT_ON_SCREEN_INDENT:
                     break;
@@ -178,7 +178,7 @@ class ScenarioService
             }
         }
 
-        $filePath = tempnam('/tmp/test', 'lc_');
+        $filePath = tempnam('/tmp', 'lc_');
         file_put_contents($filePath . '.php', "<?php\n" . htmlspecialchars_decode($code));
         $output = shell_exec('php -l ' . $filePath . '.php');
         unlink($filePath);

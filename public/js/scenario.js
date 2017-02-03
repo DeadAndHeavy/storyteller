@@ -19,7 +19,9 @@ $('#removeEpisodeActionLogicModal').on('show.bs.modal', function (event) {
 $(document).on('click', '.remove_container_logic_button', function ()
 {
     var episode_action_id = $(this).data('episode-action-id');
-    var logic_screen = $("#episode_action_collapse_" + episode_action_id).find(".logic_container_screen .panel-body");
+    var logic_collapse_id = (episode_action_id == 0) ? "#init_logic_collapse" : "#episode_action_collapse_" + episode_action_id;
+    var logic_screen = $(logic_collapse_id).find(".logic_container_screen .panel-body");
+
     logic_screen.html("<div class='logic_row active'></div>");
 });
 
@@ -53,7 +55,7 @@ $(document).on('click', '.add-logic-var-button', function ()
 {
     var logic_container_screen = $(this).parents(".logic_container");
     var active_logic_row = logic_container_screen.find("div.logic_row.active");
-    var element = '<span class="label label-primary logic_statement logic_data_variable_on_screen">' + $(this).data('variable-title') + '</span>';
+    var element = '<span class="logic_statement logic_data_variable_on_screen"><span class="label label-primary var_label">VAR</span><input type="text"></span>';
     active_logic_row.append(element);
 });
 
@@ -356,6 +358,7 @@ $("#save_scenario").submit(function(e) {
                 var logic_class = class_list.match(/logic_data_.*_on_screen/g)[0];
                 switch(logic_class) {
                     case 'logic_data_value_on_screen':
+                    case 'logic_data_variable_on_screen':
                         $(tag).find('input').attr('value', $(tag).find('input').val());
                         break;
                     default:

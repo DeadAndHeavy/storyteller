@@ -1,3 +1,7 @@
+#app-layout {
+    font-family: Segoe;
+}
+
 textarea {
     resize: none;
 }
@@ -323,7 +327,7 @@ a {
     font-family: Segoe;
 }
 
-.logic_data_variable_on_screen, .logic_data_assignment_on_screen, .logic_data_if_on_screen, .logic_data_elseif_on_screen, .logic_data_else_on_screen,
+.var_label, .logic_data_variable_on_screen, .logic_data_assignment_on_screen, .logic_data_if_on_screen, .logic_data_elseif_on_screen, .logic_data_else_on_screen,
 .logic_data_left_bracket_on_screen, .logic_data_right_bracket_on_screen, .logic_data_plus_on_screen, .logic_data_minus_on_screen,
 .logic_data_equal_on_screen, .logic_data_multiplication_on_screen, .logic_data_division_on_screen, .logic_data_value_on_screen, .logic_data_not_equal_on_screen,
 .logic_data_and_on_screen, .logic_data_or_on_screen, .logic_data_not_on_screen, .logic_data_greater_on_screen, .logic_data_greater_or_equal_on_screen,
@@ -338,7 +342,7 @@ a {
     margin-bottom: 3px;
 }
 
-.logic_data_value_on_screen input{
+.logic_data_value_on_screen input, .logic_data_variable_on_screen input{
     text-align: center;
     width: 60px;
 }
@@ -349,4 +353,8 @@ a {
 
 .logic_row:hover{
     cursor: pointer;
+}
+
+#public_quests .quest_row {
+    font-family: Segoe;
 }

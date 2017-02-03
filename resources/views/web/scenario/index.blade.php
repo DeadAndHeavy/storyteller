@@ -108,7 +108,7 @@
                                                                             <div class="panel-body">
                                                                                 <h4 class="text-center">Init logic</h4>
                                                                                 <hr>
-                                                                                <div class="init_logic logic_container col-md-12">
+                                                                                <div class="init_logic logic_container col-md-12" data-episode-action-id=0>
                                                                                     <div class="col-md-6">
                                                                                         <div class="logic_container_screen panel panel-default">
                                                                                             <div class="panel-body">
@@ -131,21 +131,10 @@
 
                                                                                     <div class="episode_action_logic_operations col-md-6">
                                                                                         <div class="operation_buttons_set variables_list">
-                                                                                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add variables or values. You can add new variables on 'Variables' tab">
+                                                                                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add variables or values.">
                                                                                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                                                                                             </button>
-                                                                                            <div class="btn-group">
-                                                                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                                    Add variable <span class="caret"></span>
-                                                                                                </button>
-                                                                                                <ul class="dropdown-menu">
-                                                                                                    @foreach ($questVariables as $variable)
-                                                                                                        <li>
-                                                                                                            <a class="add-logic-var-button" href="javascript:void(0);" data-variable-title="{{ $variable->title }}" data-variable-id="{{ $variable->id }}">{{ $variable->title }}</a>
-                                                                                                        </li>
-                                                                                                    @endforeach
-                                                                                                </ul>
-                                                                                            </div>
+                                                                                            <button type="button" class="btn btn-primary add-logic-var-button">VARIABLE</button>
                                                                                             <button type="button" class="btn btn-primary add-logic-value-button">VALUE</button>
                                                                                         </div>
                                                                                         <div class="operation_buttons_set condition_elements_list">
@@ -252,18 +241,7 @@
                                                                                                 <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Add variables or values. You can add new variables on 'Variables' tab">
                                                                                                     <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                                                                                                 </button>
-                                                                                                <div class="btn-group">
-                                                                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                                        Add variable <span class="caret"></span>
-                                                                                                    </button>
-                                                                                                    <ul class="dropdown-menu">
-                                                                                                        @foreach ($questVariables as $variable)
-                                                                                                            <li>
-                                                                                                                <a class="add-logic-var-button" href="javascript:void(0);" data-variable-title="{{ $variable->title }}" data-variable-id="{{ $variable->id }}">{{ $variable->title }}</a>
-                                                                                                            </li>
-                                                                                                        @endforeach
-                                                                                                    </ul>
-                                                                                                </div>
+                                                                                                <button type="button" class="btn btn-primary add-logic-var-button">VARIABLE</button>
                                                                                                 <button type="button" class="btn btn-primary add-logic-value-button">VALUE</button>
                                                                                             </div>
                                                                                             <div class="operation_buttons_set condition_elements_list">
